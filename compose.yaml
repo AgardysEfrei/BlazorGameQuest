@@ -1,0 +1,34 @@
+﻿services:
+  blazorapp:
+    image: blazorapp
+    ports:
+      - "50045:8080"
+    build:
+      context: .
+      dockerfile: BlazorApp/Dockerfile
+      
+
+  userservice:
+    image: userservice
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
+
+  scoreservice:
+    image: scoreservice
+    build:
+      context: .
+      dockerfile: ScoreService/Dockerfile
+
+  gameservice:
+    image: gameservice
+    build:
+      context: .
+      dockerfile: GameService/Dockerfile
+
+  authentificationservice:
+    image: authentificationservice
+    build:
+      context: .
+      dockerfile: AuthentificationService/Dockerfile
+
