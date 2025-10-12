@@ -31,4 +31,3 @@
     build:
       context: .
       dockerfile: AuthentificationService/Dockerfile
-
