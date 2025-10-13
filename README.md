@@ -2,11 +2,17 @@
 Projet DOTNET Théo Klein / Vicente Seixas
 
 ## Build & Run
-In order to build and run the application, you first have to run the following command:
+In order to build and run the application, you first have to change the following environnment variable to the path where you wish to store the database data:
+
+`POSTGRES_DATA`
+
+then run the following command:
 
 `docker compose -f compose.yaml up -d`
 
-Then, you can connect to http://localhost:50045/ to access the webapp.
+Finally, you can connect to http://localhost:50045/ to access the webapp.
+
+Swagger is accessible at http://localhost:50045/swagger/index.html  
 
 ## Microservices
 
