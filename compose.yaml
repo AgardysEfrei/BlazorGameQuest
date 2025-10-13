@@ -1,33 +1,65 @@
 ﻿services:
+  database:
+    image: database
+    build:
+      context: .
+      dockerfile: Databases/Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+    
   blazorapp:
     image: blazorapp
     ports:
-      - "50045:8080"
+      - "8080:8080"
     build:
       context: .
       dockerfile: BlazorApp/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
       
-
   userservice:
     image: userservice
     build:
       context: .
       dockerfile: UserService/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
 
   scoreservice:
     image: scoreservice
     build:
       context: .
       dockerfile: ScoreService/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
 
   gameservice:
     image: gameservice
     build:
       context: .
       dockerfile: GameService/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
 
   authentificationservice:
     image: authentificationservice
     build:
       context: .
       dockerfile: AuthentificationService/Dockerfile
+      
+  gateway:
+    image: gateway
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
+    ports:
+      - "50045:8080"
