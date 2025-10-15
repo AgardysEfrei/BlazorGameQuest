@@ -1,0 +1,16 @@
+﻿
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 530px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+div img{
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.6;
+}
