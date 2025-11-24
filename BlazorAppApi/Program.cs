@@ -1,0 +1,42 @@
+using Microsoft.EntityFrameworkCore;
+using SharedModelDbContext;
+
+var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddDbContext<BlazorQuestDbContext>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.AllowAnyOrigin() // **Change this to .WithOrigins("YOUR_BLAZOR_FRONTEND_URL") in production**
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+// Add services to the container.
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
+
+app.MapControllers();
+app.UseHttpsRedirection();
+
+app.Run();
+
+record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}

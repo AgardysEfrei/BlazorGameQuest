@@ -8,6 +8,10 @@ In order to build and run the application, you first have to run the following c
 
 Then, you can connect to http://localhost:50045/ to access the webapp.
 
+Url swagger : http://localhost:5001/index.html
+
+Pour la migration merci d'utiliser la chaîne de connexion suivante :
+"Host=localhost;Port=5432;Database=blazorgamequest;Username=root;Password=root;"
 ## Microservices
 
 Service | Role
