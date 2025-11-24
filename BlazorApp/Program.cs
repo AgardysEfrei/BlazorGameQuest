@@ -1,11 +1,24 @@
 using BlazorApp.Components;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddHttpClient("Api", client =>
+{
+    // **IMPORTANT**: This is the URL the server-side component of Blazor will use.
+    // If you are using Docker Compose, this should be the name of your API service.
+    // For local testing outside of Docker, use the API's specific URL (e.g., "https://localhost:7001/").
+    // Assuming your API service name in Docker is 'api-service-name':
+    client.BaseAddress = new Uri("http://blazorappapi/"); 
+    
+    // If running locally without Docker, and your API runs on http://localhost:5001:
+    // client.BaseAddress = new Uri("http://localhost:5001/");
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

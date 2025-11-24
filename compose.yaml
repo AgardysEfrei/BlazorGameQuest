@@ -1,65 +1,45 @@
 ﻿services:
-  database:
-    image: database
-    build:
-      context: .
-      dockerfile: Databases/Dockerfile
+  db:
+    image: postgres
+    restart: always
+    expose:
+      - "5432"
     ports:
       - "5432:5432"
+    command: -p 5432
     volumes:
-      - ${POSTGRES_DATA}:/var/lib/postgresql/data
-    restart: always
+      - ${PATH_TO_STORAGE}:/var/lib/postgresql/data/:rw
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: root
+      PGDATA : /var/lib/postgresql/data/
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-    
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
   blazorapp:
     image: blazorapp
     ports:
-      - "8080:8080"
+      - "50045:8080"
     build:
       context: .
       dockerfile: BlazorApp/Dockerfile
     depends_on:
-      database:
+      db:
         condition: service_healthy
-      
-  userservice:
-    image: userservice
+    command: [ "python", "app.py" ]  
+  blazorappapi:
+    image: blazorappapi
     build:
       context: .
-      dockerfile: UserService/Dockerfile
-    depends_on:
-      database:
-        condition: service_healthy
-
-  scoreservice:
-    image: scoreservice
-    build:
-      context: .
-      dockerfile: ScoreService/Dockerfile
-    depends_on:
-      database:
-        condition: service_healthy
-
-  gameservice:
-    image: gameservice
-    build:
-      context: .
-      dockerfile: GameService/Dockerfile
-    depends_on:
-      database:
-        condition: service_healthy
-
-  authentificationservice:
-    image: authentificationservice
-    build:
-      context: .
-      dockerfile: AuthentificationService/Dockerfile
-      
-  gateway:
-    image: gateway
-    build:
-      context: .
-      dockerfile: Gateway/Dockerfile
-    ports:
-      - "50045:8080"
+      dockerfile: BlazorAppApi/Dockerfile
+    ports: # <-- ADD THIS BLOCK
+      - "5001:8080" # Maps host machine port 5001 to container port 8080

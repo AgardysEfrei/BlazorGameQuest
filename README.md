@@ -14,6 +14,10 @@ Finally, you can connect to http://localhost:50045/ to access the webapp.
 
 Swagger is accessible at http://localhost:50045/swagger/index.html  
 
+Url swagger : http://localhost:5001/index.html
+
+Pour la migration merci d'utiliser la chaîne de connexion suivante :
+"Host=localhost;Port=5432;Database=blazorgamequest;Username=root;Password=root;"
 ## Microservices
 
 Service | Role
