@@ -43,4 +43,3 @@
       dockerfile: BlazorAppApi/Dockerfile
     ports: # <-- ADD THIS BLOCK
       - "5001:8080" # Maps host machine port 5001 to container port 8080
-
