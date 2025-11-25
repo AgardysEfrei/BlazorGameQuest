@@ -1,6 +1,18 @@
 # BlazorGameQuest
 Projet DOTNET Théo Klein / Vicente Seixas
+# Pour la première utilisation :
+- Lancer uniquement le docker de base de données appelé "db" avec cette commande : 
+`docker-compose up -d db`
 
+
+- Puis déplacez vous dans le projet "SharedModelDbContext"
+
+
+- et enfin exécutez la commande suivante :
+`dotnet ef database update --verbose --project SharedModelDbContext.csproj   --startup-project SharedModelDbContext.csproj`
+
+
+- Voilà, vous pouvez désormais utiliser la commande : docker-compose up -d pour lancer le projet.
 ## Build & Run
 In order to build and run the application, you first have to change the following environnment variable to the path where you wish to store the database data:
 
@@ -16,15 +28,7 @@ Swagger is accessible at http://localhost:50045/swagger/index.html
 
 Url swagger : http://localhost:5001/index.html
 
-Pour la migration merci d'utiliser la chaîne de connexion suivante :
-"Host=localhost;Port=5432;Database=blazorgamequest;Username=root;Password=root;"
 
-Pour la première utilisation :
-Lancer uniquement le docker de base de données "appelé db-1".
-Puis déplacez vous dans le projet "SharedModelDbContext"
-et enfin exécutez la commande suivante :
-dotnet ef database update --verbose --project SharedModelDbContext.csproj   --startup-project SharedModelDbContext.csproj
-Et enfin, faites la migration
 ## Microservices
 
 Service | Role
