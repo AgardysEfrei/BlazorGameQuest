@@ -18,6 +18,13 @@ Url swagger : http://localhost:5001/index.html
 
 Pour la migration merci d'utiliser la chaîne de connexion suivante :
 "Host=localhost;Port=5432;Database=blazorgamequest;Username=root;Password=root;"
+
+Pour la première utilisation :
+Lancer uniquement le docker de base de données "appelé db-1".
+Puis déplacez vous dans le projet "SharedModelDbContext"
+et enfin exécutez la commande suivante :
+dotnet ef database update --verbose --project SharedModelDbContext.csproj   --startup-project SharedModelDbContext.csproj
+Et enfin, faites la migration
 ## Microservices
 
 Service | Role
