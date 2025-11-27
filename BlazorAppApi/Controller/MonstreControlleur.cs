@@ -32,7 +32,7 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverMonstre/{id}")]
         public SharedModels.Monstre TrouverMonstreParId(int id)
         {
-            Monstre MonstreAppele = _context.Monstres.Find(id);
+            Monstre? MonstreAppele = _context.Monstres.Find(id);
             if (MonstreAppele == null)
                 throw new BadHttpRequestException("Aucun Monstre trouve");
             return MonstreAppele;

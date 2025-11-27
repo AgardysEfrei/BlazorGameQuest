@@ -5,7 +5,7 @@ namespace SharedModels;
 public class Monstre
 {
     public int monstreid { get; set; }
-    public required string  nom { get; set; }
+    public required string nom { get; set; }
     public required string description { get; set; }
     [JsonIgnore]
     public int salleid { get; set; }

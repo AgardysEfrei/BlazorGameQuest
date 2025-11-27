@@ -17,7 +17,7 @@ namespace BlazorAppApi.Controller
         [HttpPost("ajouterJoueur")]
         public async Task<ActionResult<Joueur>> CreationeJoueur([FromBody] JoueurDTO JoueurDTO)
         {
-            Utilisateur utilisateurAAjouter = _context.Find<Utilisateur>(JoueurDTO.utilisateurId);
+            Utilisateur? utilisateurAAjouter = _context.Find<Utilisateur>(JoueurDTO.utilisateurId);
             if (utilisateurAAjouter == null)
                 throw new BadHttpRequestException("Aucun utilisateur trouve");
             var nouvelJoueur = new Joueur()
@@ -36,7 +36,7 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverJoueur/{id}")]
         public SharedModels.Joueur TrouverJoueurParId(int id)
         {
-            Joueur JoueurAppele = _context.Joueurs.Find(id);
+            Joueur? JoueurAppele = _context.Joueurs.Find(id);
             if (JoueurAppele == null)
                 throw new BadHttpRequestException("Aucun Joueur trouve");
             return JoueurAppele;

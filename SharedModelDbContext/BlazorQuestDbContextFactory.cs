@@ -13,7 +13,7 @@ namespace SharedModelDbContext
         {
             var optionsBuilder = new DbContextOptionsBuilder<BlazorQuestDbContext>();
             
-            var connectionString = "Host=host.docker.internal;Port=5432;Database=blazorgamequest;Username=postgres;Password=postgres;";
+            var connectionString = "Host=db;Port=5432;Database=blazorgamequest;Username=postgres;Password=postgres;";
             
             optionsBuilder.UseNpgsql(connectionString);
 

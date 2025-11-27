@@ -47,7 +47,7 @@ public class BlazorQuestDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=host.docker.internal;Port=5432;Database=blazorgamequest;Username=postgres;Password=postgres;"); // chaine de connexion à la DB
+        optionsBuilder.UseNpgsql("Host=db;Port=5432;Database=blazorgamequest;Username=postgres;Password=postgres;"); // chaine de connexion à la DB
     }
     public BlazorQuestDbContext(DbContextOptions<BlazorQuestDbContext> options) : base(options)
     {
