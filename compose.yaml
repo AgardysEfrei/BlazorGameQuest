@@ -2,30 +2,16 @@
   db:
     image: postgres
     restart: always
-    expose:
-      - "5432"
     ports:
       - "5432:5432"
-    command: -p 5432
     volumes:
-      - ${PATH_TO_STORAGE}:/var/lib/postgresql/data/:rw
+      - ${PATH_TO_STORAGE}:/var/lib/postgresql
     environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_USER: root
-      POSTGRES_DB: root
-      /config/pg_hba.conf : /var/lib/postgresql/data/pg_hba.conf
-      PGDATA : /var/lib/postgresql/data/initialisation
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
-      interval: 1s
-      timeout: 5s
-      retries: 10
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8081:8080"
+  
   blazorapp:
     image: blazorapp
     ports:
@@ -46,5 +32,5 @@
       db:
         condition: service_healthy
     command: [ "python", "app.py" ]
-    ports: # <-- ADD THIS BLOCK
-      - "5001:8080" # Maps host machine port 5001 to container port 8080
+    ports:
+      - "5001:8080"

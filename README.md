@@ -22,6 +22,6 @@ then run the following command:
 
 `docker compose -f compose.yaml up -d`
 
-Finally, you can connect to http://localhost:50045/ to access the webapp. 
+Finally, you can connect to http://localhost:5000/ to access the webapp. 
 
 Url swagger : http://localhost:5001/index.html
