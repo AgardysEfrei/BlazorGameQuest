@@ -3,6 +3,7 @@ using SharedModelDbContext;
 using SharedModels;
 using Microsoft.EntityFrameworkCore;
 using BlazorAppApi.DTO;
+using BlazorAppApi.Service;
 
 namespace BlazorAppApi.Controller
 {
@@ -10,13 +11,15 @@ namespace BlazorAppApi.Controller
     public class MonstreControlleur : ControllerBase
     {
         private readonly BlazorQuestDbContext _context;
-        public MonstreControlleur(BlazorQuestDbContext context)
+        private readonly IMonstreService _monstreService;
+        public MonstreControlleur(BlazorQuestDbContext context, IMonstreService monstreService)
         {
             _context = context;
+            _monstreService = monstreService;
         }
 
         [HttpPost("ajouterMonstre")]
-        public async Task<ActionResult<Monstre>> CreationeMonstre([FromBody] MonstreDTO MonstreDTO)
+        public async Task<Monstre> CreationeMonstre([FromBody] MonstreDTO MonstreDTO)
         {
             var nouveauMonstre = new Monstre()
             {
@@ -24,24 +27,20 @@ namespace BlazorAppApi.Controller
                 description = MonstreDTO.description,  
                 
             };
-            _context.Monstres.Add(nouveauMonstre);
-            await _context.SaveChangesAsync();
+            _monstreService.CreationMonstre(nouveauMonstre);
             return nouveauMonstre;
         }
 
         [HttpGet("trouverMonstre/{id}")]
         public SharedModels.Monstre TrouverMonstreParId(int id)
         {
-            Monstre MonstreAppele = _context.Monstres.Find(id);
-            if (MonstreAppele == null)
-                throw new BadHttpRequestException("Aucun Monstre trouve");
-            return MonstreAppele;
+            return  _monstreService.TrouverMonstreParId(id);
         }
 
         [HttpGet("trouvertouslesMonstres")]
         public List<Monstre> TrouverTousLesMonstres()
         {
-            return _context.Monstres.ToList();
+            return _monstreService.TrouverTousLesMonstres();
         }
     }
 }

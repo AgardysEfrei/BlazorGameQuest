@@ -8,9 +8,11 @@ namespace BlazorAppApi.Service;
 public class ScorePartieService : IScorePartieService
 {
     private readonly BlazorQuestDbContext _context;
-    public ScorePartieService(BlazorQuestDbContext context)
+    private readonly IDonjonsService _donjonService;
+    public ScorePartieService(BlazorQuestDbContext context, IDonjonsService donjonService)
     {
         _context = context;
+        _donjonService = donjonService;
     }
 
     public ScorePartie TrouverScorePartieParId(int id)
@@ -28,8 +30,7 @@ public class ScorePartieService : IScorePartieService
 
     public async Task<ScorePartie> GenererNouvellePartie(int id)
     {
-        var donjonController = new DonjonsControlleur(_context);
-        var donjonGenere = (await donjonController.CreationeDonjons()).Value;
+        var donjonGenere = (await _donjonService.CreationDonjons());
         var nouvellePartie = new ScorePartie()
         {
             joueurId = id,

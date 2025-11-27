@@ -32,4 +32,17 @@ public class AdministrateurService : IAdministrateurService
         await _context.SaveChangesAsync();
         return nouvelAdministrateur;
     }
+
+    public Administrateur TrouverAdministrateurParId(int id)
+    {
+        Administrateur AdministrateurAppele = _context.Administrateurs.Find(id);
+        if (AdministrateurAppele == null)
+            throw new BadHttpRequestException("Aucun Administrateur trouve");
+        return AdministrateurAppele;
+    }
+
+    public List<Administrateur> TrouverTousLesAdministrateurs()
+    {
+        return _context.Administrateurs.ToList();
+    }
 }

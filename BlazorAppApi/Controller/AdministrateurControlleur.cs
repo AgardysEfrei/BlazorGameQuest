@@ -29,16 +29,13 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverAdministrateur/{id}")]
         public SharedModels.Administrateur TrouverAdministrateurParId(int id)
         {
-            Administrateur AdministrateurAppele = _context.Administrateurs.Find(id);
-            if (AdministrateurAppele == null)
-                throw new BadHttpRequestException("Aucun Administrateur trouve");
-            return AdministrateurAppele;
+            return _administrateurService.TrouverAdministrateurParId(id);
         }
 
         [HttpGet("trouvertouslesAdministrateurs")]
         public List<Administrateur> TrouverTousLesAdministrateurs()
         {
-            return _context.Administrateurs.ToList();
+            return _administrateurService.TrouverTousLesAdministrateurs();
         }
 
     }
