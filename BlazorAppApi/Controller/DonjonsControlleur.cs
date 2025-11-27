@@ -16,12 +16,23 @@ namespace BlazorAppApi.Controller
         {
             _context = context;
         }
-        [HttpPost("genererundonjonvide")]
+        [HttpPost("genererundonjon")]
         public async Task<ActionResult<Donjons>> CreationeDonjons()
         {
-            var nouveauDonjon = new Donjons();
-            _context.DonjonsEnumerable.Add(nouveauDonjon);
-            await _context.SaveChangesAsync();
+            var nombreAleatoire = new Random();
+            var listeSalleAleatoire = _context.SallesEnumerable.ToList();
+            //Le but ici est de généré 5 chiffres aléatoires sans qu'il y ai de répétition
+            var numeroDesSallesGeneresNonRepetes = Enumerable.Range(0,listeSalleAleatoire.Count).OrderBy(x => nombreAleatoire.Next()).Take(5).ToList();
+            List<Salles> sallesTiresAuSort = new List<Salles>();
+            for (int indiceSalle = 0; indiceSalle < 5; indiceSalle++)
+            {
+                var numeroSalleTiree = numeroDesSallesGeneresNonRepetes[indiceSalle];
+                sallesTiresAuSort.Add(listeSalleAleatoire[numeroSalleTiree]);
+            }
+            var nouveauDonjon = new Donjons()
+            {
+                sallesList =  sallesTiresAuSort,
+            };
             return nouveauDonjon;
         }
         [HttpGet("trouvertouslesdonjons")]

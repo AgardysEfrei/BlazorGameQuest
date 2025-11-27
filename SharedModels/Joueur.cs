@@ -8,5 +8,6 @@ public class Joueur
     public int utilisateurId { get; set; }
     public Utilisateur utilisateur { get; set; } = null!;
     [JsonIgnore]
-    public ScorePartie? score { get; set; } 
+    //Calculer le score d'un joueur reviendra à calculer le score contenu dans les parties
+    public List<ScorePartie> score { get; set; } = new List<ScorePartie>(); 
 }

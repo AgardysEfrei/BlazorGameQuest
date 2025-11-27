@@ -64,7 +64,13 @@ namespace SharedModelDbContext.Entities
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("donjonsid"));
 
+                    b.Property<int>("scorePartieid")
+                        .HasColumnType("integer");
+
                     b.HasKey("donjonsid");
+
+                    b.HasIndex("scorePartieid")
+                        .IsUnique();
 
                     b.ToTable("DonjonsEnumerable", "blazorgame");
                 });
@@ -86,6 +92,13 @@ namespace SharedModelDbContext.Entities
                         .IsUnique();
 
                     b.ToTable("Joueurs", "blazorgame");
+
+                    b.HasData(
+                        new
+                        {
+                            joueurid = 20,
+                            utilisateurId = 20
+                        });
                 });
 
             modelBuilder.Entity("SharedModels.Monstre", b =>
@@ -96,13 +109,26 @@ namespace SharedModelDbContext.Entities
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("monstreid"));
 
+                    b.Property<double>("chanceToucher")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("lienImage")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("nom")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("pointDeVie")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("pointGagner")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("salleid")
                         .HasColumnType("integer");
@@ -113,6 +139,118 @@ namespace SharedModelDbContext.Entities
                         .IsUnique();
 
                     b.ToTable("Monstres", "blazorgame");
+
+                    b.HasData(
+                        new
+                        {
+                            monstreid = 1,
+                            chanceToucher = 30.5,
+                            description = "Alien venu de l'univers pour enlever une princesse sur la planète terre. Extrêment rapide mais faible",
+                            lienImage = "../BlazorAppApi/wwwroot/alien.jpeg",
+                            nom = "tatunga",
+                            pointDeVie = 9,
+                            pointGagner = 4.5,
+                            salleid = 10
+                        },
+                        new
+                        {
+                            monstreid = 2,
+                            chanceToucher = 90.5,
+                            description = "Cambrioleur qui cambriole des donjons, précis mais lent",
+                            lienImage = "../BlazorAppApi/wwwroot/cambrioleur.png",
+                            nom = "Cambrioleur",
+                            pointDeVie = 20,
+                            pointGagner = 45.0,
+                            salleid = 20
+                        },
+                        new
+                        {
+                            monstreid = 3,
+                            chanceToucher = 10.5,
+                            description = "Empereur ayant la volonté d'assujetir la terre, TRES résistant mais vise très mal. Vous devriez fuir le combat",
+                            lienImage = "../BlazorAppApi/wwwroot/alien.jpg",
+                            nom = "empereur_de_lespace",
+                            pointDeVie = 100,
+                            pointGagner = 450.0,
+                            salleid = 30
+                        },
+                        new
+                        {
+                            monstreid = 4,
+                            chanceToucher = 100.0,
+                            description = "Enfant s'étant perdu dans le donjon, très facile à battre et donne beaucoup d'expérience. Mais franchement, qui serait assez cruel pour se battre avec un enfant ?",
+                            lienImage = "../BlazorAppApi/wwwroot/garcon_effrayant.jpg",
+                            nom = "garçon_effrayant",
+                            pointDeVie = 1,
+                            pointGagner = 500.0,
+                            salleid = 40
+                        },
+                        new
+                        {
+                            monstreid = 5,
+                            chanceToucher = 90.0,
+                            description = "Juste un type avec un flingue, le frapper sera facile et pour vous et pour lui",
+                            lienImage = "../BlazorAppApi/wwwroot/homme_avec_une_arme.jpg",
+                            nom = "Homme avec une arme",
+                            pointDeVie = 40,
+                            pointGagner = 290.0,
+                            salleid = 50
+                        },
+                        new
+                        {
+                            monstreid = 6,
+                            chanceToucher = 70.0,
+                            description = "Le pire ennemi de tout le monde, entrainé par des années d'attaque de mauvais payeurs, il n'aura aucun mal à vous rendre la monnaie de votre pièce",
+                            lienImage = "../BlazorAppApi/wwwroot/inspecteur_impot.jpg",
+                            nom = "inspecteur_impot",
+                            pointDeVie = 35,
+                            pointGagner = 100.0,
+                            salleid = 60
+                        },
+                        new
+                        {
+                            monstreid = 7,
+                            chanceToucher = 60.0,
+                            description = "Mechant qui veut tuer la gentille parce que c'est le méchant ni plus ni moins",
+                            lienImage = "../BlazorAppApi/wwwroot/mechant_qui_veut_tuer_la_gentille.jpg",
+                            nom = "mechant_qui_veut_tuer_la_gentille",
+                            pointDeVie = 40,
+                            pointGagner = 200.0,
+                            salleid = 70
+                        },
+                        new
+                        {
+                            monstreid = 8,
+                            chanceToucher = 50.0,
+                            description = "Souris qui aime beaucoup noel, avec lui c'est 50/50",
+                            lienImage = "../BlazorAppApi/wwwroot/mickey_mouse.gif",
+                            nom = "mickey_mouse",
+                            pointDeVie = 50,
+                            pointGagner = 500.0,
+                            salleid = 80
+                        },
+                        new
+                        {
+                            monstreid = 9,
+                            chanceToucher = 20.0,
+                            description = "Homme très violent et ératique. Mieux vaux ne pas l'énerver",
+                            lienImage = "../BlazorAppApi/wwwroot/mister_frog.jpeg",
+                            nom = "Mister Frog",
+                            pointDeVie = 200,
+                            pointGagner = 500.0,
+                            salleid = 90
+                        },
+                        new
+                        {
+                            monstreid = 10,
+                            chanceToucher = 70.0,
+                            description = "WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALUIGI TIME!!!!!!!!!!!!!!!!!!",
+                            lienImage = "../BlazorAppApi/wwwroot/waluigi.jpg",
+                            nom = "waluigi",
+                            pointDeVie = 70,
+                            pointGagner = 190.0,
+                            salleid = 100
+                        });
                 });
 
             modelBuilder.Entity("SharedModels.Salles", b =>
@@ -123,20 +261,92 @@ namespace SharedModelDbContext.Entities
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("salleId"));
 
+                    b.Property<double>("scoreBonus")
+                        .HasColumnType("double precision");
+
                     b.HasKey("salleId");
 
                     b.ToTable("SallesEnumerable", "blazorgame");
+
+                    b.HasData(
+                        new
+                        {
+                            salleId = 10,
+                            scoreBonus = 230.0
+                        },
+                        new
+                        {
+                            salleId = 20,
+                            scoreBonus = -300.0
+                        },
+                        new
+                        {
+                            salleId = 30,
+                            scoreBonus = 400.0
+                        },
+                        new
+                        {
+                            salleId = 40,
+                            scoreBonus = -230.0
+                        },
+                        new
+                        {
+                            salleId = 50,
+                            scoreBonus = 90.0
+                        },
+                        new
+                        {
+                            salleId = 60,
+                            scoreBonus = 230.0
+                        },
+                        new
+                        {
+                            salleId = 70,
+                            scoreBonus = 10.0
+                        },
+                        new
+                        {
+                            salleId = 80,
+                            scoreBonus = -30.0
+                        },
+                        new
+                        {
+                            salleId = 90,
+                            scoreBonus = -247.0
+                        },
+                        new
+                        {
+                            salleId = 100,
+                            scoreBonus = -300.0
+                        });
                 });
 
             modelBuilder.Entity("SharedModels.ScorePartie", b =>
                 {
+                    b.Property<int>("ScorePartieId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScorePartieId"));
+
                     b.Property<int>("joueurId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("partieTerminee")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("pointsDeVie")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("progression")
                         .HasColumnType("integer");
 
                     b.Property<int>("score")
                         .HasColumnType("integer");
 
-                    b.HasKey("joueurId");
+                    b.HasKey("ScorePartieId");
+
+                    b.HasIndex("joueurId");
 
                     b.ToTable("ScoreParties", "blazorgame");
                 });
@@ -168,6 +378,16 @@ namespace SharedModelDbContext.Entities
                     b.HasKey("utilisateurId");
 
                     b.ToTable("Utilisateurs", "blazorgame");
+
+                    b.HasData(
+                        new
+                        {
+                            utilisateurId = 20,
+                            adresseMail = "Test@Test.com",
+                            motDePasse = "Test",
+                            nom = "Test",
+                            prenom = "Test"
+                        });
                 });
 
             modelBuilder.Entity("DonjonsSalles", b =>
@@ -196,6 +416,17 @@ namespace SharedModelDbContext.Entities
                     b.Navigation("utilisateur");
                 });
 
+            modelBuilder.Entity("SharedModels.Donjons", b =>
+                {
+                    b.HasOne("SharedModels.ScorePartie", "scorePartie")
+                        .WithOne("donjonGenere")
+                        .HasForeignKey("SharedModels.Donjons", "scorePartieid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("scorePartie");
+                });
+
             modelBuilder.Entity("SharedModels.Joueur", b =>
                 {
                     b.HasOne("SharedModels.Utilisateur", "utilisateur")
@@ -221,8 +452,8 @@ namespace SharedModelDbContext.Entities
             modelBuilder.Entity("SharedModels.ScorePartie", b =>
                 {
                     b.HasOne("SharedModels.Joueur", "joueur")
-                        .WithOne("score")
-                        .HasForeignKey("SharedModels.ScorePartie", "joueurId")
+                        .WithMany("score")
+                        .HasForeignKey("joueurId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -237,6 +468,11 @@ namespace SharedModelDbContext.Entities
             modelBuilder.Entity("SharedModels.Salles", b =>
                 {
                     b.Navigation("monstre");
+                });
+
+            modelBuilder.Entity("SharedModels.ScorePartie", b =>
+                {
+                    b.Navigation("donjonGenere");
                 });
 
             modelBuilder.Entity("SharedModels.Utilisateur", b =>

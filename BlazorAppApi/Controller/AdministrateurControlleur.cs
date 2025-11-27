@@ -3,36 +3,29 @@ using SharedModelDbContext;
 using SharedModels;
 using Microsoft.EntityFrameworkCore;
 using BlazorAppApi.DTO;
+using BlazorAppApi.Service;
+
 namespace BlazorAppApi.Controller
 {   [Route("api/[controller]")]
     [ApiController]
     public class AdministrateurControlleur : ControllerBase
     {
         private readonly BlazorQuestDbContext _context;
-        public AdministrateurControlleur(BlazorQuestDbContext context)
+        private readonly IAdministrateurService _administrateurService;
+        public AdministrateurControlleur(BlazorQuestDbContext context, IAdministrateurService administrateurService)
         {
             _context = context;
+            _administrateurService = administrateurService;
         }
-
         [HttpPost("ajouterAdministrateur")]
-        public async Task<ActionResult<Administrateur>> CreationeAdministrateur([FromBody] AdministrateurDTO AdministrateurDTO)
+        public Task<Administrateur> CreationeAdministrateur([FromBody] AdministrateurDTO AdministrateurDTO)
         {
-            Utilisateur utilisateurAAjouter = _context.Find<Utilisateur>(AdministrateurDTO.utilisateurId);
-            if (utilisateurAAjouter == null)
-                throw new BadHttpRequestException("Aucun utilisateur trouve");
-            var nouvelAdministrateur = new Administrateur()
+            var nouvelleAdministrateur = new Administrateur()
             {
                 utilisateurId =  AdministrateurDTO.utilisateurId,
-                utilisateur =  utilisateurAAjouter
-                
             };
-            utilisateurAAjouter.administrateur = nouvelAdministrateur;
-            _context.Update(utilisateurAAjouter);
-            _context.Administrateurs.Add(nouvelAdministrateur);
-            await _context.SaveChangesAsync();
-            return nouvelAdministrateur;
+            return _administrateurService.CreationAdministrateur(nouvelleAdministrateur);
         }
-
         [HttpGet("trouverAdministrateur/{id}")]
         public SharedModels.Administrateur TrouverAdministrateurParId(int id)
         {

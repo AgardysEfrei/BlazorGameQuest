@@ -3,45 +3,44 @@ using SharedModelDbContext;
 using SharedModels;
 using Microsoft.EntityFrameworkCore;
 using BlazorAppApi.DTO;
+using BlazorAppApi.Service;
+
 namespace BlazorAppApi.Controller
 {   [Route("api/[controller]")]
     [ApiController]
     public class UtilisateurControlleur : ControllerBase
     {
         private readonly BlazorQuestDbContext _context;
-        public UtilisateurControlleur(BlazorQuestDbContext context)
+        private readonly IUtilisateurService _utilisateurService;
+        public UtilisateurControlleur(BlazorQuestDbContext context, UtilisateurService utilisateurService)
         {
             _context = context;
+            _utilisateurService = utilisateurService;
         }
 
         [HttpPost("ajouterutilisateur")]
-        public async Task<ActionResult<Utilisateur>> CreationeUtilisateur([FromBody] UtilisateurDTO utilisateurDTO)
+        public Task<Utilisateur> CreationUtilisateur([FromBody] UtilisateurDTO utilisateurDTO)
         {
-            var nouvelUtilisateur = new Utilisateur()
+            Utilisateur utilisateur = new Utilisateur()
             {
                 nom = utilisateurDTO.nom,
-                prenom = utilisateurDTO.prenom,
-                motDePasse = utilisateurDTO.motDePasse,
-                adresseMail = utilisateurDTO.adresseMail
+                prenom =  utilisateurDTO.prenom,
+                adresseMail =  utilisateurDTO.adresseMail,
+                motDePasse =   utilisateurDTO.motDePasse,
             };
-            _context.Utilisateurs.Add(nouvelUtilisateur);
-            await _context.SaveChangesAsync();
-            return nouvelUtilisateur;
+            return _utilisateurService.CreationUtilisateur(utilisateur);
         }
 
         [HttpGet("trouverutilisateur/{id}")]
         public SharedModels.Utilisateur TrouverUtilisateurParId(int id)
         {
-            Utilisateur utilisateurAppele = _context.Utilisateurs.Find(id);
-            if (utilisateurAppele == null)
-                throw new BadHttpRequestException("Aucun utilisateur trouve");
-            return utilisateurAppele;
+            return TrouverUtilisateurParId(id);
         }
 
         [HttpGet("trouvertouslesutilisateurs")]
         public List<Utilisateur> TrouverTousLesUtilisateurs()
         {
-            return _context.Utilisateurs.ToList();
+            return TrouverTousLesUtilisateurs();
         }
 
     }

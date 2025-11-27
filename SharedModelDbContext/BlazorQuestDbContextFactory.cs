@@ -38,7 +38,7 @@ namespace SharedModelDbContext
             if (string.IsNullOrEmpty(connectionString))
             {
                 // FALLBACK si la config n'est pas lue
-                connectionString = "Host=db;Port=5432;Database=blazorgamequest;Username=root;Password=root;";
+                connectionString = "Host=localhost;Port=5432;Database=blazorgamequest;Username=root;Password=root;";
             }
 
             // 3. Application de l'option Npgsql
