@@ -18,7 +18,7 @@ namespace BlazorAppApi.Controller
         [HttpPost("ajouterScorePartie")]
         public async Task<ActionResult<ScorePartie>> CreationScorePartie([FromBody] ScorePartieDTO ScorePartieDTO)
         {
-            Joueur JoueurAAjouter = _context.Find<Joueur>(ScorePartieDTO.joueurId);
+            Joueur? JoueurAAjouter = _context.Find<Joueur>(ScorePartieDTO.joueurId);
             if (JoueurAAjouter == null)
                 throw new BadHttpRequestException("Aucun joueur trouve");
             var nouvelScorePartie = new ScorePartie()
@@ -28,7 +28,7 @@ namespace BlazorAppApi.Controller
                 score =  0
                 
             };
-            JoueurAAjouter.score = nouvelScorePartie;
+            JoueurAAjouter.score.Add(nouvelScorePartie);
             _context.Update(JoueurAAjouter);
             _context.ScoreParties.Add(nouvelScorePartie);
             await _context.SaveChangesAsync();
@@ -38,7 +38,7 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverScorePartie/{id}")]
         public SharedModels.ScorePartie TrouverScorePartieParId(int id)
         {
-            ScorePartie ScorePartieAppele = _context.ScoreParties.Find(id);
+            ScorePartie? ScorePartieAppele = _context.ScoreParties.Find(id);
             if (ScorePartieAppele == null)
                 throw new BadHttpRequestException("Aucun ScorePartie trouve");
             return ScorePartieAppele;

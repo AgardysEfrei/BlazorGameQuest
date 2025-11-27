@@ -8,5 +8,5 @@ public class Joueur
     public int utilisateurId { get; set; }
     public Utilisateur utilisateur { get; set; } = null!;
     [JsonIgnore]
-    public ScorePartie? score { get; set; } 
+    public List<ScorePartie> score { get; set; } = new List<ScorePartie>(); 
 }

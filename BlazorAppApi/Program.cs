@@ -23,6 +23,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<BlazorQuestDbContext>();
+    
+    var pendingMigrations = context.Database.GetPendingMigrations().ToArray();
+
+    if (pendingMigrations.Any())
+    {
+        await context.Database.MigrateAsync();
+    }
+}
+
 app.UseCors(MyAllowSpecificOrigins);
 app.UseSwagger();
 app.UseSwaggerUI(options =>

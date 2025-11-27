@@ -17,7 +17,7 @@ namespace BlazorAppApi.Controller
         [HttpPost("ajouterAdministrateur")]
         public async Task<ActionResult<Administrateur>> CreationeAdministrateur([FromBody] AdministrateurDTO AdministrateurDTO)
         {
-            Utilisateur utilisateurAAjouter = _context.Find<Utilisateur>(AdministrateurDTO.utilisateurId);
+            Utilisateur? utilisateurAAjouter = _context.Find<Utilisateur>(AdministrateurDTO.utilisateurId);
             if (utilisateurAAjouter == null)
                 throw new BadHttpRequestException("Aucun utilisateur trouve");
             var nouvelAdministrateur = new Administrateur()
@@ -36,7 +36,7 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverAdministrateur/{id}")]
         public SharedModels.Administrateur TrouverAdministrateurParId(int id)
         {
-            Administrateur AdministrateurAppele = _context.Administrateurs.Find(id);
+            Administrateur? AdministrateurAppele = _context.Administrateurs.Find(id);
             if (AdministrateurAppele == null)
                 throw new BadHttpRequestException("Aucun Administrateur trouve");
             return AdministrateurAppele;
