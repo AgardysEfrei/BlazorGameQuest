@@ -15,7 +15,6 @@ namespace BlazorAppApi.Controller
         public MonstreControlleur(BlazorQuestDbContext context, IMonstreService monstreService)
         {
             _context = context;
-            _monstreService = monstreService;
         }
 
         [HttpPost("ajouterMonstre")]
