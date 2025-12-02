@@ -9,10 +9,11 @@ public class ScorePartie
     //Joueur qui a commencé la partie
     public int joueurId { get; set; }
     public Joueur joueur { get; set; } = null!;
-    public int score { get; set; } = 0;
+    public double score { get; set; } = 0;
     public int progression { get; set; } = 0;
     public int pointsDeVie { get; set; } = 5;
     public Boolean partieTerminee { get; set; } = false;
     //Une partie va forcément entrainer la génération de donjons.
-    public Donjons? donjonGenere { get; set; }
+    public int donjonId { get; set; }
+    public Donjons donjonGenere { get; set; } = null!;
 }

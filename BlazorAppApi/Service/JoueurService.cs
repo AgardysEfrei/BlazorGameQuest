@@ -13,13 +13,13 @@ public class JoueurService : IJoueurService
 
     public JoueurService(BlazorQuestDbContext context, IUtilisateurService utilisateurService)
     {
-        context = context;
+        _context = context;
         _utilisateurService = utilisateurService;
     }
 
     public async Task<Joueur> CreationJoueur(Joueur joueur)
     {
-        Utilisateur utilisateurAAjouter = _utilisateurService.TrouverUtilisateurParId(joueur.utilisateurId);
+        Utilisateur? utilisateurAAjouter = _utilisateurService.TrouverUtilisateurParId(joueur.utilisateurId);
         if (utilisateurAAjouter == null)
             throw new BadHttpRequestException("Aucun utilisateur trouve");
         var nouvelJoueur = new Joueur()

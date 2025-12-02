@@ -5,7 +5,7 @@
 namespace SharedModelDbContext.Entities
 {
     /// <inheritdoc />
-    public partial class MakeAutoIncrementId : Migration
+    public partial class base_refaite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

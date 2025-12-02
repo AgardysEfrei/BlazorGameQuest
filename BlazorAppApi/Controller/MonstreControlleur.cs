@@ -8,14 +8,10 @@ using BlazorAppApi.Service;
 namespace BlazorAppApi.Controller
 {
 
-    public class MonstreControlleur : ControllerBase
+    public class MonstreControlleur(IMonstreService monstreService, ISallesService sallesService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly IMonstreService _monstreService;
-        public MonstreControlleur(BlazorQuestDbContext context, IMonstreService monstreService)
-        {
-            _context = context;
-        }
+        private readonly IMonstreService _monstreService = monstreService;
+        private readonly ISallesService _sallesService = sallesService;
 
         [HttpPost("ajouterMonstre")]
         public async Task<Monstre> CreationeMonstre([FromBody] MonstreDTO MonstreDTO)
@@ -24,9 +20,14 @@ namespace BlazorAppApi.Controller
             {
                 nom =  MonstreDTO.nom,
                 description = MonstreDTO.description,  
+                lienImage = MonstreDTO.lienImage,
+                pointDeVie = MonstreDTO.pointDeVie,
+                chanceToucher =  MonstreDTO.chanceToucher,
+                pointGagner = MonstreDTO.pointGagner,
+
                 
             };
-            _monstreService.CreationMonstre(nouveauMonstre);
+            await _monstreService.CreationMonstre(nouveauMonstre);
             return nouveauMonstre;
         }
 
@@ -40,6 +41,12 @@ namespace BlazorAppApi.Controller
         public List<Monstre> TrouverTousLesMonstres()
         {
             return _monstreService.TrouverTousLesMonstres();
+        }
+
+        [HttpGet("ChargerMonstreDeLaSalle/{id}")]
+        public Monstre ChargerMonstreDeLaSalle(int id)
+        {
+            return _monstreService.ChargerMonstreDeLaSalle(_sallesService.TrouverSalle(id));
         }
     }
 }

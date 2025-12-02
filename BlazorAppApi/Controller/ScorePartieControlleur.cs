@@ -9,14 +9,9 @@ namespace BlazorAppApi.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ScorePartieControlleur
+    public class ScorePartieControlleur(IScorePartieService scorePartieService) : ControllerBase
     {
-        private readonly IScorePartieService _scorePartieService;
-        public ScorePartieControlleur(IScorePartieService scorePartieService)
-        {
-            _scorePartieService = scorePartieService;
-        }
-        
+        private readonly IScorePartieService _scorePartieService =  scorePartieService;
         [HttpGet("trouverScorePartie/{id}")]
         public SharedModels.ScorePartie TrouverScorePartieParId(int id)
         {
@@ -33,6 +28,26 @@ namespace BlazorAppApi.Controller
         public Task<ScorePartie> GenererNouvellePartie(int id)
         {
             return _scorePartieService.GenererNouvellePartie(id);
+        }
+
+        [HttpGet("fouillerPiece/{id}")]
+        public double FouillerPiece(int id)
+        {
+            ScorePartie partieEnCours = TrouverScorePartieParId(id);
+            return _scorePartieService.FouillerPiece(partieEnCours);
+        }
+
+        [HttpGet("InfligerDegats/{id}")]
+        public int InfligerDegats(int id)
+        {
+            ScorePartie partieEnCours = TrouverScorePartieParId(id);
+            return _scorePartieService.InfligerDegats(partieEnCours);
+        }
+
+        [HttpGet("ChangerDePieces/{id}")]
+        public Boolean ChangerDePieces(int id)
+        {
+            return _scorePartieService.ChangerDePiece(_scorePartieService.TrouverScorePartieParId(id));
         }
     }
 }

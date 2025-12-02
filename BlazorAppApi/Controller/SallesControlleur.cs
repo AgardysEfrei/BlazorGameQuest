@@ -10,20 +10,21 @@ namespace BlazorAppApi.Controller
     [Route("api/[controller]")]
     [ApiController]
 
-    public class SallesControlleur : ControllerBase
+    public class SallesControlleur(ISallesService sallesService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly ISallesService _sallesService;
-        public SallesControlleur(BlazorQuestDbContext context, ISallesService sallesService)
-        {
-            _context = context;
-            _sallesService = sallesService;
-        }
+        private readonly ISallesService _sallesService = sallesService;
         [HttpPost("genererunesallevide")]
         public Task<Salles> CreationeSalles()
         {
             return _sallesService.CreationSalles();
         }
+
+        [HttpGet("trouverUneSalle/{idSalle}")]
+        public Salles TrouverUneSalle(int idSalle)
+        {
+            return _sallesService.TrouverSalle(idSalle);
+        }
+        
         [HttpGet("trouvertouteslesSalles")]
         public List<Salles> TrouverTousLesSalles()
         {

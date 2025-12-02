@@ -8,16 +8,9 @@ using BlazorAppApi.Service;
 namespace BlazorAppApi.Controller
 {   [Route("api/[controller]")]
     [ApiController]
-    public class UtilisateurControlleur : ControllerBase
+    public class UtilisateurControlleur(IUtilisateurService utilisateurService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly IUtilisateurService _utilisateurService;
-        public UtilisateurControlleur(BlazorQuestDbContext context, UtilisateurService utilisateurService)
-        {
-            _context = context;
-            _utilisateurService = utilisateurService;
-        }
-
+        private readonly IUtilisateurService _utilisateurService = utilisateurService;
         [HttpPost("ajouterutilisateur")]
         public Task<Utilisateur> CreationUtilisateur([FromBody] UtilisateurDTO utilisateurDTO)
         {
@@ -34,13 +27,13 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouverutilisateur/{id}")]
         public SharedModels.Utilisateur TrouverUtilisateurParId(int id)
         {
-            return TrouverUtilisateurParId(id);
+            return _utilisateurService.TrouverUtilisateurParId(id);
         }
 
         [HttpGet("trouvertouslesutilisateurs")]
         public List<Utilisateur> TrouverTousLesUtilisateurs()
         {
-            return TrouverTousLesUtilisateurs();
+            return _utilisateurService.TrouverTousLesUtilisateurs();
         }
 
     }

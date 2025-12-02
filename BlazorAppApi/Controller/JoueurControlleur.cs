@@ -8,15 +8,9 @@ namespace BlazorAppApi.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JoueurControlleur
+    public class JoueurControlleur(IJoueurService joueurService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly IJoueurService _joueurService;
-        public JoueurControlleur(BlazorQuestDbContext context, IJoueurService joueurService)
-        {
-            _context = context;
-            _joueurService = joueurService;
-        }
+        private readonly IJoueurService _joueurService = joueurService;
 
         [HttpPost("ajouterJoueur")]
         public Task<Joueur> CreationeJoueur([FromBody] JoueurDTO joueurDTO)

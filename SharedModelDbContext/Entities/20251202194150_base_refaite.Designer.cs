@@ -11,11 +11,11 @@ using SharedModelDbContext;
 namespace SharedModelDbContext.Entities
 {
     [DbContext(typeof(BlazorQuestDbContext))]
-    [Migration("20251126224818_Rajout_des_modeles_initiales")]
-    partial class Rajout_des_modeles_initiales
+    [Migration("20251202194150_base_refaite")]
+    partial class base_refaite
     {
         /// <inheritdoc />
-        protected void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,15 +67,9 @@ namespace SharedModelDbContext.Entities
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("donjonsid"));
 
-                    b.Property<int>("scorePartieid")
-                        .HasColumnType("integer");
-
                     b.HasKey("donjonsid");
 
-                    b.HasIndex("scorePartieid")
-                        .IsUnique();
-
-                    b.ToTable("DonjonsEnumerable", "blazorgame");
+                    b.ToTable("Donjons", "blazorgame");
                 });
 
             modelBuilder.Entity("SharedModels.Joueur", b =>
@@ -133,13 +127,7 @@ namespace SharedModelDbContext.Entities
                     b.Property<double>("pointGagner")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("salleid")
-                        .HasColumnType("integer");
-
                     b.HasKey("monstreid");
-
-                    b.HasIndex("salleid")
-                        .IsUnique();
 
                     b.ToTable("Monstres", "blazorgame");
 
@@ -152,8 +140,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/alien.jpeg",
                             nom = "tatunga",
                             pointDeVie = 9,
-                            pointGagner = 4.5,
-                            salleid = 10
+                            pointGagner = 4.5
                         },
                         new
                         {
@@ -163,8 +150,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/cambrioleur.png",
                             nom = "Cambrioleur",
                             pointDeVie = 20,
-                            pointGagner = 45.0,
-                            salleid = 20
+                            pointGagner = 45.0
                         },
                         new
                         {
@@ -174,8 +160,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/alien.jpg",
                             nom = "empereur_de_lespace",
                             pointDeVie = 100,
-                            pointGagner = 450.0,
-                            salleid = 30
+                            pointGagner = 450.0
                         },
                         new
                         {
@@ -185,8 +170,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/garcon_effrayant.jpg",
                             nom = "garçon_effrayant",
                             pointDeVie = 1,
-                            pointGagner = 500.0,
-                            salleid = 40
+                            pointGagner = 500.0
                         },
                         new
                         {
@@ -196,8 +180,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/homme_avec_une_arme.jpg",
                             nom = "Homme avec une arme",
                             pointDeVie = 40,
-                            pointGagner = 290.0,
-                            salleid = 50
+                            pointGagner = 290.0
                         },
                         new
                         {
@@ -207,8 +190,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/inspecteur_impot.jpg",
                             nom = "inspecteur_impot",
                             pointDeVie = 35,
-                            pointGagner = 100.0,
-                            salleid = 60
+                            pointGagner = 100.0
                         },
                         new
                         {
@@ -218,8 +200,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/mechant_qui_veut_tuer_la_gentille.jpg",
                             nom = "mechant_qui_veut_tuer_la_gentille",
                             pointDeVie = 40,
-                            pointGagner = 200.0,
-                            salleid = 70
+                            pointGagner = 200.0
                         },
                         new
                         {
@@ -229,8 +210,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/mickey_mouse.gif",
                             nom = "mickey_mouse",
                             pointDeVie = 50,
-                            pointGagner = 500.0,
-                            salleid = 80
+                            pointGagner = 500.0
                         },
                         new
                         {
@@ -240,8 +220,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/mister_frog.jpeg",
                             nom = "Mister Frog",
                             pointDeVie = 200,
-                            pointGagner = 500.0,
-                            salleid = 90
+                            pointGagner = 500.0
                         },
                         new
                         {
@@ -251,8 +230,7 @@ namespace SharedModelDbContext.Entities
                             lienImage = "../BlazorAppApi/wwwroot/waluigi.jpg",
                             nom = "waluigi",
                             pointDeVie = 70,
-                            pointGagner = 190.0,
-                            salleid = 100
+                            pointGagner = 190.0
                         });
                 });
 
@@ -264,62 +242,78 @@ namespace SharedModelDbContext.Entities
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("salleId"));
 
+                    b.Property<int>("monstreId")
+                        .HasColumnType("integer");
+
                     b.Property<double>("scoreBonus")
                         .HasColumnType("double precision");
 
                     b.HasKey("salleId");
 
-                    b.ToTable("SallesEnumerable", "blazorgame");
+                    b.HasIndex("monstreId")
+                        .IsUnique();
+
+                    b.ToTable("Salles", "blazorgame");
 
                     b.HasData(
                         new
                         {
                             salleId = 10,
+                            monstreId = 1,
                             scoreBonus = 230.0
                         },
                         new
                         {
                             salleId = 20,
+                            monstreId = 2,
                             scoreBonus = -300.0
                         },
                         new
                         {
                             salleId = 30,
+                            monstreId = 3,
                             scoreBonus = 400.0
                         },
                         new
                         {
                             salleId = 40,
+                            monstreId = 4,
                             scoreBonus = -230.0
                         },
                         new
                         {
                             salleId = 50,
+                            monstreId = 5,
                             scoreBonus = 90.0
                         },
                         new
                         {
                             salleId = 60,
+                            monstreId = 6,
                             scoreBonus = 230.0
                         },
                         new
                         {
                             salleId = 70,
+                            monstreId = 7,
                             scoreBonus = 10.0
                         },
                         new
                         {
                             salleId = 80,
+                            monstreId = 8,
                             scoreBonus = -30.0
                         },
                         new
                         {
                             salleId = 90,
+                            monstreId = 9,
                             scoreBonus = -247.0
                         },
                         new
                         {
                             salleId = 100,
+                            monstreId = 10,
                             scoreBonus = -300.0
                         });
                 });
@@ -331,6 +325,9 @@ namespace SharedModelDbContext.Entities
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScorePartieId"));
+
+                    b.Property<int>("donjonId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("joueurId")
                         .HasColumnType("integer");
@@ -344,10 +341,13 @@ namespace SharedModelDbContext.Entities
                     b.Property<int>("progression")
                         .HasColumnType("integer");
 
-                    b.Property<int>("score")
-                        .HasColumnType("integer");
+                    b.Property<double>("score")
+                        .HasColumnType("double precision");
 
                     b.HasKey("ScorePartieId");
+
+                    b.HasIndex("donjonId")
+                        .IsUnique();
 
                     b.HasIndex("joueurId");
 
@@ -419,17 +419,6 @@ namespace SharedModelDbContext.Entities
                     b.Navigation("utilisateur");
                 });
 
-            modelBuilder.Entity("SharedModels.Donjons", b =>
-                {
-                    b.HasOne("SharedModels.ScorePartie", "scorePartie")
-                        .WithOne("donjonGenere")
-                        .HasForeignKey("SharedModels.Donjons", "scorePartieid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("scorePartie");
-                });
-
             modelBuilder.Entity("SharedModels.Joueur", b =>
                 {
                     b.HasOne("SharedModels.Utilisateur", "utilisateur")
@@ -441,26 +430,39 @@ namespace SharedModelDbContext.Entities
                     b.Navigation("utilisateur");
                 });
 
-            modelBuilder.Entity("SharedModels.Monstre", b =>
+            modelBuilder.Entity("SharedModels.Salles", b =>
                 {
-                    b.HasOne("SharedModels.Salles", "salle")
-                        .WithOne("monstre")
-                        .HasForeignKey("SharedModels.Monstre", "salleid")
+                    b.HasOne("SharedModels.Monstre", "monstre")
+                        .WithOne("salle")
+                        .HasForeignKey("SharedModels.Salles", "monstreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("salle");
+                    b.Navigation("monstre");
                 });
 
             modelBuilder.Entity("SharedModels.ScorePartie", b =>
                 {
+                    b.HasOne("SharedModels.Donjons", "donjonGenere")
+                        .WithOne("scorePartie")
+                        .HasForeignKey("SharedModels.ScorePartie", "donjonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SharedModels.Joueur", "joueur")
                         .WithMany("score")
                         .HasForeignKey("joueurId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("donjonGenere");
+
                     b.Navigation("joueur");
+                });
+
+            modelBuilder.Entity("SharedModels.Donjons", b =>
+                {
+                    b.Navigation("scorePartie");
                 });
 
             modelBuilder.Entity("SharedModels.Joueur", b =>
@@ -468,14 +470,10 @@ namespace SharedModelDbContext.Entities
                     b.Navigation("score");
                 });
 
-            modelBuilder.Entity("SharedModels.Salles", b =>
+            modelBuilder.Entity("SharedModels.Monstre", b =>
                 {
-                    b.Navigation("monstre");
-                });
-
-            modelBuilder.Entity("SharedModels.ScorePartie", b =>
-                {
-                    b.Navigation("donjonGenere");
+                    b.Navigation("salle")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SharedModels.Utilisateur", b =>

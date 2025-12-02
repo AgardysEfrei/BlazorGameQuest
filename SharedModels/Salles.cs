@@ -8,5 +8,6 @@ public class Salles
     public double scoreBonus { get; set; }
     [JsonIgnore]
     public List<Donjons> donjonsList { get; } = new List<Donjons>();
+    public int monstreId { get; set; }
     public Monstre? monstre { get; set; }
 }

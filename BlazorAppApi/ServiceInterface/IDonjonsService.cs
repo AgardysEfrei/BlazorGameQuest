@@ -5,4 +5,5 @@ public interface IDonjonsService
 {
     public Task<Donjons> CreationDonjons();
     public List<Donjons> TrouverTousLesDonjons();
+    public Donjons TrouverDonjon(int IdDonjon);
 }

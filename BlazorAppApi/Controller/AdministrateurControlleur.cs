@@ -8,15 +8,10 @@ using BlazorAppApi.Service;
 namespace BlazorAppApi.Controller
 {   [Route("api/[controller]")]
     [ApiController]
-    public class AdministrateurControlleur : ControllerBase
+    public class AdministrateurControlleur(IAdministrateurService administrateurService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly IAdministrateurService _administrateurService;
-        public AdministrateurControlleur(BlazorQuestDbContext context, IAdministrateurService administrateurService)
-        {
-            _context = context;
-            _administrateurService = administrateurService;
-        }
+        private readonly IAdministrateurService _administrateurService = administrateurService;
+
         [HttpPost("ajouterAdministrateur")]
         public Task<Administrateur> CreationeAdministrateur([FromBody] AdministrateurDTO AdministrateurDTO)
         {

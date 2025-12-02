@@ -10,20 +10,22 @@ namespace BlazorAppApi.Controller
     [Route("api/[controller]")]
     [ApiController]
 
-    public class DonjonsControlleur : ControllerBase
+    public class DonjonsControlleur(IDonjonsService donjonsService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        private readonly IDonjonsService _donjonsService;
-        public DonjonsControlleur(BlazorQuestDbContext context, IDonjonsService donjonsService)
-        {
-            _context = context;
-            _donjonsService = donjonsService;
-        }
+        private readonly IDonjonsService _donjonsService = donjonsService;
+        
         [HttpPost("genererundonjon")]
         public Task<Donjons> CreationeDonjons()
         {
             return _donjonsService.CreationDonjons();
         }
+
+        [HttpGet("trouverUnDonjon/{IdDonjon}")]
+        public Donjons TrouverUnDonjon(int IdDonjon)
+        {
+            return _donjonsService.TrouverDonjon(IdDonjon);
+        }
+        
         [HttpGet("trouvertouslesdonjons")]
         public List<Donjons> TrouverTousLesDonjons()
         {

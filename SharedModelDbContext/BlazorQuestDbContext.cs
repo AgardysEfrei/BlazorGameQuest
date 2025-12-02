@@ -1,21 +1,23 @@
-﻿using SharedModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SharedModels;
 
 namespace SharedModelDbContext;
 using Microsoft.EntityFrameworkCore;
 public class BlazorQuestDbContext : DbContext
 {
     public DbSet<SharedModels.Administrateur> Administrateurs { get; set; }
-    public DbSet<SharedModels.Donjons> DonjonsEnumerable { get; set; }
+    public DbSet<SharedModels.Donjons> Donjons { get; set; }
     public DbSet<SharedModels.Joueur> Joueurs { get; set; }
     public DbSet<SharedModels.Monstre> Monstres { get; set; }
-    public DbSet<SharedModels.Salles> SallesEnumerable { get; set; }
+    public DbSet<SharedModels.Salles> Salles { get; set; }
     public DbSet<SharedModels.ScorePartie> ScoreParties { get; set; }
     public DbSet<SharedModels.Utilisateur> Utilisateurs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //COnfiguration explicite de la relation N-N des tables Monstre et Salles
+        //Configuration explicite de la relation N-N des tables Monstre et Salles
         modelBuilder.Entity<SharedModels.ScorePartie>()
             .HasKey(a => a.ScorePartieId);
+
         modelBuilder.Entity<SharedModels.Salles>()
             .HasKey(a => a.salleId);
         modelBuilder.Entity<SharedModels.Salles>()
@@ -24,57 +26,67 @@ public class BlazorQuestDbContext : DbContext
                 {
                     salleId = 10,
                     scoreBonus = 230,
+                    monstreId = 1,
 
                 },
                 new Salles()
                 {
                     salleId = 20,
                     scoreBonus = -300,
+                    monstreId = 2
                     
                 },
                 new Salles()
                 {
                     salleId = 30,
                     scoreBonus = 400,
+                    monstreId = 3
                 },
                 new Salles()
                 {
                     salleId = 40,
                     scoreBonus = -230,
+                    monstreId = 4
 
                 },
                 new Salles()
                 {
                     salleId = 50,
                     scoreBonus = 90,
+                    monstreId = 5
                     
                 },
                 new Salles()
                 {
                     salleId = 60,
                     scoreBonus = 230,
+                    monstreId = 6
                 },
                 new Salles()
                 {
                     salleId = 70,
                     scoreBonus = 10,
+                    monstreId = 7
 
                 },
                 new Salles()
                 {
                     salleId = 80,
                     scoreBonus = -30,
+                    monstreId = 8
                     
                 },
                 new Salles()
                 {
                     salleId = 90,
                     scoreBonus = -247,
+                    monstreId = 9
                 },
                 new Salles()
                 {
                     salleId = 100,
                     scoreBonus = -300,
+                    monstreId = 10
                     
                 })
             ;
@@ -86,6 +98,12 @@ public class BlazorQuestDbContext : DbContext
         modelBuilder.Entity<SharedModels.Donjons>()
             .Property(f=>f.donjonsid)
             .ValueGeneratedOnAdd();
+        //Configurer explicitement la clef étrangère de scorePartie
+        modelBuilder.Entity<Donjons>()
+            .HasOne(e => e.scorePartie)
+            .WithOne(e => e.donjonGenere)
+            .HasForeignKey<ScorePartie>(e => e.donjonId)
+            .IsRequired();
         modelBuilder.Entity<SharedModels.Utilisateur>()
             .Property(f=>f.utilisateurId)
             .ValueGeneratedOnAdd();
@@ -124,7 +142,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 9,
                     chanceToucher = 30.5,
                     pointGagner = 4.5,
-                    salleid = 10,
                 },
                 new Monstre()
                 {
@@ -136,7 +153,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 20,
                     chanceToucher = 90.5,
                     pointGagner = 45,
-                    salleid = 20,
                 },
                 new Monstre()
                 {
@@ -148,7 +164,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 100,
                     chanceToucher = 10.5,
                     pointGagner = 450,
-                    salleid = 30,
                 },
                 new Monstre()
                 {
@@ -160,7 +175,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 1,
                     chanceToucher = 100,
                     pointGagner = 500,
-                    salleid = 40,
                 },
                 new Monstre()
                 {
@@ -172,7 +186,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 40,
                     chanceToucher = 90,
                     pointGagner = 290,
-                    salleid = 50,
                 },
                 new Monstre()
                 {
@@ -184,7 +197,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 35,
                     chanceToucher = 70,
                     pointGagner = 100,
-                    salleid = 60,
                 },new Monstre()
                 {
                     monstreid = 7,
@@ -195,7 +207,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 40,
                     chanceToucher = 60,
                     pointGagner = 200,
-                    salleid = 70,
                 },
                 new Monstre()
                 {
@@ -207,7 +218,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 50,
                     chanceToucher = 50,
                     pointGagner = 500,
-                    salleid = 80,
                 },
                 new Monstre()
                 {
@@ -219,7 +229,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 200,
                     chanceToucher = 20,
                     pointGagner = 500,
-                    salleid = 90,
                 },
                 new Monstre()
                 {
@@ -231,7 +240,6 @@ public class BlazorQuestDbContext : DbContext
                     pointDeVie = 70,
                     chanceToucher = 70,
                     pointGagner = 190,
-                    salleid = 100,
                 });
         modelBuilder.Entity<SharedModels.Monstre>()
             .Property(f=>f.monstreid)

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SharedModelDbContext;
+using BlazorAppApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -21,6 +22,15 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IUtilisateurService, UtilisateurService>();
+builder.Services.AddScoped<IAdministrateurService, AdministrateurService>();
+builder.Services.AddScoped<IDonjonsService, DonjonsService>();
+builder.Services.AddScoped<IJoueurService, JoueurService>();
+builder.Services.AddScoped<IMonstreService, MonstreService>();
+builder.Services.AddScoped<ISallesService, SallesService>();
+builder.Services.AddScoped<IScorePartieService, ScorePartieService>();
+builder.Services.AddScoped<IUtilisateurService, UtilisateurService>();
+
 
 var app = builder.Build();
 
