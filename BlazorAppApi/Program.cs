@@ -1,20 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using SharedModelDbContext;
 using BlazorAppApi.Service;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddDbContext<BlazorQuestDbContext>();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: "AllowBlazorApp",
         policy =>
         {
-            policy.AllowAnyOrigin() // **Change this to .WithOrigins("YOUR_BLAZOR_FRONTEND_URL") in production**
+            policy.WithOrigins("http://localhost:5000") // **Change this to .WithOrigins("YOUR_BLAZOR_FRONTEND_URL") in production**
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
 });
+//Sauvegarde des clefs pour decrypter les antiforgery token
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/keys/"))
+    .SetApplicationName("BlazorAppApi");
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -46,7 +50,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -54,12 +58,10 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
-app.MapControllers();
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("AllowBlazorApp");
+app.MapControllers();
+
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

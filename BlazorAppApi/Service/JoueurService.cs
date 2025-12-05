@@ -39,6 +39,7 @@ public class JoueurService : IJoueurService
     public Joueur TrouverJoueurParId(int id)
     {
         Joueur JoueurAppele = _context.Joueurs.Find(id);
+        JoueurAppele.utilisateur = _utilisateurService.TrouverUtilisateurParId(JoueurAppele.utilisateurId);
         if (JoueurAppele == null)
             throw new BadHttpRequestException("Aucun Joueur trouve");
         return JoueurAppele;

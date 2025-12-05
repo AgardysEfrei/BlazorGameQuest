@@ -13,15 +13,36 @@ namespace BlazorAppApi.Controller
     {
         private readonly IScorePartieService _scorePartieService =  scorePartieService;
         [HttpGet("trouverScorePartie/{id}")]
-        public SharedModels.ScorePartie TrouverScorePartieParId(int id)
+        public async Task<ScorePartie> TrouverScorePartieParId(int id)
         {
-            return _scorePartieService.TrouverScorePartieParId(id);
+            return await _scorePartieService.TrouverScorePartieParId(id);
+        }
+        [IgnoreAntiforgeryToken]
+        [HttpPatch("sauvegarderPartie")]
+        public async Task<IActionResult> SauvegarderPartie([FromBody] ScorePartie partieRecue)
+        {
+            Console.WriteLine("je suis dedans\n");
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Modele invalide : "+ModelBinderFactory.ToString());
+                // This line returns the detailed validation failure information
+                return BadRequest(ModelState); 
+            }
+            await _scorePartieService.SauvegarderPartie(partieRecue);
+            // Retourner un statut de succès standard
+            return NoContent();
         }
 
         [HttpGet("trouvertouslesScoreParties")]
         public List<ScorePartie> TrouverTousLesScoreParties()
         {
             return _scorePartieService.TrouverTousLesScorePartie();
+        }
+
+        [HttpGet("trouvertouslescoreparties/{id}")]
+        public List<ScorePartie> TrouverTousLesScorePartieParIdJoueur(int id)
+        {
+            return _scorePartieService.TrouverTousLesScorePartieParIdJoueur(id);
         }
 
         [HttpGet("genererNouvellePartie/{id}")]
@@ -31,23 +52,18 @@ namespace BlazorAppApi.Controller
         }
 
         [HttpGet("fouillerPiece/{id}")]
-        public double FouillerPiece(int id)
+        public async Task<double> FouillerPiece(int id)
         {
-            ScorePartie partieEnCours = TrouverScorePartieParId(id);
-            return _scorePartieService.FouillerPiece(partieEnCours);
+            ScorePartie partieEnCours = await TrouverScorePartieParId(id);
+            return await _scorePartieService.FouillerPiece(partieEnCours);
         }
 
         [HttpGet("InfligerDegats/{id}")]
-        public int InfligerDegats(int id)
+        public async Task<int> InfligerDegats(int id)
         {
-            ScorePartie partieEnCours = TrouverScorePartieParId(id);
-            return _scorePartieService.InfligerDegats(partieEnCours);
+            ScorePartie partieEnCours = await TrouverScorePartieParId(id);
+            return await _scorePartieService.InfligerDegats(partieEnCours);
         }
-
-        [HttpGet("ChangerDePieces/{id}")]
-        public Boolean ChangerDePieces(int id)
-        {
-            return _scorePartieService.ChangerDePiece(_scorePartieService.TrouverScorePartieParId(id));
-        }
+        
     }
 }

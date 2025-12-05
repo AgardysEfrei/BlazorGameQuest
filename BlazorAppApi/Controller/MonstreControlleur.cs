@@ -42,11 +42,5 @@ namespace BlazorAppApi.Controller
         {
             return _monstreService.TrouverTousLesMonstres();
         }
-
-        [HttpGet("ChargerMonstreDeLaSalle/{id}")]
-        public Monstre ChargerMonstreDeLaSalle(int id)
-        {
-            return _monstreService.ChargerMonstreDeLaSalle(_sallesService.TrouverSalle(id));
-        }
     }
 }

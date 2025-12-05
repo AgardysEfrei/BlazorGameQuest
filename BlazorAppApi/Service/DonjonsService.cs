@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedModelDbContext;
 using SharedModels;
 namespace BlazorAppApi.Service;
+using Microsoft.EntityFrameworkCore;
 
 public class DonjonsService : IDonjonsService
 {
@@ -12,13 +13,26 @@ public class DonjonsService : IDonjonsService
         _context = context;
     }
 
-    public Donjons TrouverDonjon(int IdDonjon)
+    public async Task<Donjons> TrouverDonjon(int IdDonjon)
     {
         Donjons? donjonAppele =  _context.Donjons.Find(IdDonjon); 
         if (donjonAppele == null)
             throw new BadHttpRequestException("Aucun Monstre trouve");
+        donjonAppele.sallesList = await TrouverLesSallesDuDonjon(IdDonjon);
         return donjonAppele;
     }
+
+    public async Task<List<Salles>> TrouverLesSallesDuDonjon(int idDonjon)
+    {
+        var sallesDuDonjon = await _context.Donjons.Where(d=>d.donjonsid==idDonjon).Include(d=>d.sallesList).SelectMany(d => d.sallesList).ToListAsync();
+        foreach (var salle in sallesDuDonjon)
+        {
+            salle.monstre = _context.Monstres.Find(salle.monstreId);
+            
+        }
+        return sallesDuDonjon;
+    }
+    
     public async Task<Donjons> CreationDonjons()
     {
         var nombreAleatoire = new Random();

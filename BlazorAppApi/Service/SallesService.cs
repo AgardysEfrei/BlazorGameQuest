@@ -5,9 +5,11 @@ using SharedModels;
 public class SallesService : ISallesService
 {
     private readonly BlazorQuestDbContext _context;
+    private readonly IMonstreService _monstreservice;
 
-    public SallesService(BlazorQuestDbContext context)
+    public SallesService(BlazorQuestDbContext context,IMonstreService monstreservice)
     {
+        _monstreservice = monstreservice;
         _context = context;
     }
     
@@ -28,6 +30,7 @@ public class SallesService : ISallesService
         {
             throw new BadHttpRequestException("Aucune salle trouvee");
         }
+        salleCherche.monstre= _monstreservice.TrouverMonstreParId(salleCherche.monstreId);
         return salleCherche ;
     }
     

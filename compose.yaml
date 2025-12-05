@@ -36,3 +36,7 @@
     command: [ "python", "app.py" ]
     ports:
       - "5001:8080"
+    volumes:
+      - dpkeys:/app/keys/
+volumes:
+  dpkeys: {}

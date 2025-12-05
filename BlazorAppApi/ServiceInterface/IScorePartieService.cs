@@ -4,11 +4,12 @@ namespace BlazorAppApi.Service;
 
 public interface IScorePartieService
 {
-    public ScorePartie TrouverScorePartieParId(int id);
+    public Task<ScorePartie> TrouverScorePartieParId(int id);
     public List<ScorePartie> TrouverTousLesScorePartie();
+    public List<ScorePartie> TrouverTousLesScorePartieParIdJoueur(int id);
     public Task<ScorePartie> GenererNouvellePartie(int id);
-    public double FouillerPiece(ScorePartie partieEnCours);
-    public int InfligerDegats(ScorePartie partieEnCours);
-    public Boolean ChangerDePiece(ScorePartie partieEnCours);
+    public Task<double> FouillerPiece(ScorePartie partieEnCours);
+    public Task<int> InfligerDegats(ScorePartie partieEnCours);
+    public Task<bool> SauvegarderPartie(ScorePartie partieEnCours);
 
 }

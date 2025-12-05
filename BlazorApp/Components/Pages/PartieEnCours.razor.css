@@ -1,0 +1,125 @@
+﻿/* --- ZONES SUPERPOSÉES SUPPLÉMENTAIRES --- */
+
+/* Conteneur du menu du haut */
+.menu_haut_conteneur {
+    position: absolute; /* Superpose l'élément */
+    top: 10px;          /* Positionné à 10px du haut */
+    left: 50%;         /* Démarre à 50% de la gauche */
+    transform: translateX(-50%); /* Centre horizontalement (décale de 50% de sa propre largeur) */
+
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    padding: 10px;
+    border-radius: 8px;
+
+    /* Utilise Flexbox pour organiser les boutons horizontalement */
+    display: flex;
+    gap: 10px; /* Espace entre les boutons */
+}
+
+.action_bouton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Couleur verte pour les boutons d'action */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action_bouton:hover {
+    background-color: #45a049;
+}
+
+/* Conteneur des statistiques de droite */
+.stats_droite_conteneur {
+    position: absolute; /* Superpose l'élément */
+    top: 50%;          /* Aligne le milieu vertical de l'élément avec 50% du conteneur parent */
+    right: 10px;       /* Positionné à 10px de la droite */
+    transform: translateY(-50%); /* Centre verticalement (décale de 50% de sa propre hauteur) */
+
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: white; /* Texte blanc pour la lisibilité */
+    padding: 15px;
+    border-radius: 8px;
+
+    /* Organise les textes verticalement (par défaut avec les balises <p>) */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stats_droite_conteneur p {
+    margin: 0; /* Supprime la marge par défaut des paragraphes */
+    font-weight: bold;
+}
+
+/* Conteneur de la zone de texte du bas */
+.zone_texte_bas_conteneur {
+    position: absolute; /* Superpose l'élément */
+    bottom: 10px;      /* Positionné à 10px du bas */
+    left: 10px;        /* Positionné à 10px de la gauche */
+    right: 10px;       /* S'étend jusqu'à 10px de la droite */
+
+    /* Calcule la largeur pour qu'elle ne dépasse pas l'image */
+    /* La largeur sera 100% du parent moins 10px à gauche et 10px à droite */
+    width: calc(100% - 20px);
+
+    background-color: rgba(255, 255, 255, 0.85); /* Fond blanc semi-transparent */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.zone_texte_input {
+    width: 100%; /* Prend toute la largeur de son conteneur */
+    height: 80px; /* Une hauteur fixe pour la zone de texte */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* Empêche le redimensionnement par l'utilisateur */
+    box-sizing: border-box; /* S'assure que padding et border sont inclus dans la hauteur/largeur */
+    font-size: 1em;
+    font-family: inherit;
+    line-height: 1.5;
+}
+/* Le conteneur parent doit être positionné relativement */
+.image_conteneur {
+    position: relative;
+    /* Définissez une taille pour le conteneur si nécessaire, 
+       sinon il prendra la taille de l'image de fond */
+    width: 100%;
+    display: inline-block; /* S'adapte au contenu */
+}
+
+/* L'image de fond doit simplement s'afficher */
+.image_conteneur .background-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.background-image{
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.6;
+}
+/* Wrapper qui contient le monstre et son titre, positionné au-dessus de l'image de fond */
+.image_conteneur .image_contenu {
+    position: absolute;
+    top: 50%;          /* Déplace le coin supérieur gauche à 50% du haut du conteneur */
+    left: 50%;         /* Déplace le coin supérieur gauche à 50% de la gauche du conteneur */
+    /* Décale l'élément de la moitié de sa propre taille pour un centrage parfait */
+    transform: translate(-50%, -50%);
+
+    /* Optionnel : centrer le texte/titre au-dessus du monstre */
+    text-align: center;
+}
+
+/* Style l'image du monstre elle-même (optionnel : définir une taille) */
+.image_conteneur .image_mechant {
+    max-width: 80%; /* Pour qu'elle ne soit pas trop grande */
+    height: auto;
+    display: block; /* Supprime l'espace blanc potentiel sous l'image */
+}

@@ -138,7 +138,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "tatunga",
                     description =
                         "Alien venu de l'univers pour enlever une princesse sur la planète terre. Extrêment rapide mais faible",
-                    lienImage = "../BlazorAppApi/wwwroot/alien.jpeg",
+                    lienImage = "alien.jpeg",
                     pointDeVie = 9,
                     chanceToucher = 30.5,
                     pointGagner = 4.5,
@@ -149,7 +149,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "Cambrioleur",
                     description =
                         "Cambrioleur qui cambriole des donjons, précis mais lent",
-                    lienImage = "../BlazorAppApi/wwwroot/cambrioleur.png",
+                    lienImage = "cambrioleur.png",
                     pointDeVie = 20,
                     chanceToucher = 90.5,
                     pointGagner = 45,
@@ -160,7 +160,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "empereur_de_lespace",
                     description =
                         "Empereur ayant la volonté d'assujetir la terre, TRES résistant mais vise très mal. Vous devriez fuir le combat",
-                    lienImage = "../BlazorAppApi/wwwroot/alien.jpg",
+                    lienImage = "empereur_espace.jpg",
                     pointDeVie = 100,
                     chanceToucher = 10.5,
                     pointGagner = 450,
@@ -171,7 +171,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "garçon_effrayant",
                     description =
                         "Enfant s'étant perdu dans le donjon, très facile à battre et donne beaucoup d'expérience. Mais franchement, qui serait assez cruel pour se battre avec un enfant ?",
-                    lienImage = "../BlazorAppApi/wwwroot/garcon_effrayant.jpg",
+                    lienImage = "garcon_effrayant.jpg",
                     pointDeVie = 1,
                     chanceToucher = 100,
                     pointGagner = 500,
@@ -182,7 +182,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "Homme avec une arme",
                     description =
                         "Juste un type avec un flingue, le frapper sera facile et pour vous et pour lui",
-                    lienImage = "../BlazorAppApi/wwwroot/homme_avec_une_arme.jpg",
+                    lienImage = "homme_avec_une_arme.jpeg",
                     pointDeVie = 40,
                     chanceToucher = 90,
                     pointGagner = 290,
@@ -193,7 +193,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "inspecteur_impot",
                     description =
                         "Le pire ennemi de tout le monde, entrainé par des années d'attaque de mauvais payeurs, il n'aura aucun mal à vous rendre la monnaie de votre pièce",
-                    lienImage = "../BlazorAppApi/wwwroot/inspecteur_impot.jpg",
+                    lienImage = "inspecteur_impot.jpg",
                     pointDeVie = 35,
                     chanceToucher = 70,
                     pointGagner = 100,
@@ -203,7 +203,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "mechant_qui_veut_tuer_la_gentille",
                     description =
                         "Mechant qui veut tuer la gentille parce que c'est le méchant ni plus ni moins",
-                    lienImage = "../BlazorAppApi/wwwroot/mechant_qui_veut_tuer_la_gentille.jpg",
+                    lienImage = "mechant_qui_veut_tuer_la_gentille.png",
                     pointDeVie = 40,
                     chanceToucher = 60,
                     pointGagner = 200,
@@ -214,7 +214,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "mickey_mouse",
                     description =
                         "Souris qui aime beaucoup noel, avec lui c'est 50/50",
-                    lienImage = "../BlazorAppApi/wwwroot/mickey_mouse.gif",
+                    lienImage = "mickey_mouse.gif",
                     pointDeVie = 50,
                     chanceToucher = 50,
                     pointGagner = 500,
@@ -225,7 +225,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "Mister Frog",
                     description =
                         "Homme très violent et ératique. Mieux vaux ne pas l'énerver",
-                    lienImage = "../BlazorAppApi/wwwroot/mister_frog.jpeg",
+                    lienImage = "mister_frog.jpeg",
                     pointDeVie = 200,
                     chanceToucher = 20,
                     pointGagner = 500,
@@ -236,7 +236,7 @@ public class BlazorQuestDbContext : DbContext
                     nom = "waluigi",
                     description =
                         "WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALUIGI TIME!!!!!!!!!!!!!!!!!!",
-                    lienImage = "../BlazorAppApi/wwwroot/waluigi.jpg",
+                    lienImage = "waluigi.jpg",
                     pointDeVie = 70,
                     chanceToucher = 70,
                     pointGagner = 190,

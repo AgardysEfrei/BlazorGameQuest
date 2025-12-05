@@ -9,18 +9,45 @@ public class ScorePartieService : IScorePartieService
 {
     private readonly BlazorQuestDbContext _context;
     private readonly IDonjonsService _donjonService;
-    public ScorePartieService(BlazorQuestDbContext context, IDonjonsService donjonService)
+    private readonly IJoueurService _joueurService;
+    public ScorePartieService(BlazorQuestDbContext context, IDonjonsService donjonService, IJoueurService joueurService)
     {
         _context = context;
         _donjonService = donjonService;
+        _joueurService =  joueurService;
     }
 
-    public ScorePartie TrouverScorePartieParId(int id)
+    public async Task<ScorePartie> TrouverScorePartieParId(int id)
     {
         ScorePartie? ScorePartieAppele = _context.ScoreParties.Find(id);
         if (ScorePartieAppele == null)
             throw new BadHttpRequestException("Aucun ScorePartie trouve");
+        ScorePartieAppele.donjonGenere = await _donjonService.TrouverDonjon(ScorePartieAppele.donjonId);
+        ScorePartieAppele.joueur = _joueurService.TrouverJoueurParId(ScorePartieAppele.joueurId);
         return ScorePartieAppele;
+    }
+
+    public List<ScorePartie> TrouverTousLesScorePartieParIdJoueur(int id)
+    {
+        List<ScorePartie>? scoreParties = _context.ScoreParties.Where(p => p.joueurId == id).ToList();
+        if (scoreParties == null)
+            throw new BadHttpRequestException("Aucun ScorePartie trouve");
+        return scoreParties;
+    }
+
+    public async Task<bool> SauvegarderPartie(ScorePartie partieEnCours)
+    {
+        var partieOrigine = _context.ScoreParties.Find(partieEnCours.ScorePartieId);
+        partieOrigine!.estVaincu = partieEnCours.estVaincu;
+        partieOrigine!.aFouille = partieEnCours.aFouille;
+        partieOrigine.degatsInfliges = partieEnCours.degatsInfliges;
+        partieOrigine.partieTerminee = partieEnCours.partieTerminee;
+        partieOrigine.pointsDeVie = partieEnCours.pointsDeVie;
+        partieOrigine.progression = partieEnCours.progression;
+        partieOrigine.score = partieEnCours.score;
+        _context.Update(partieOrigine);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public List<ScorePartie> TrouverTousLesScorePartie()
@@ -45,38 +72,29 @@ public class ScorePartieService : IScorePartieService
         return nouvellePartie;
     }
 
-    public Boolean ChangerDePiece(ScorePartie partieEnCours)
-    {
-        partieEnCours.progression += 1;
-        if (partieEnCours.progression > 4)
-        {
-            partieEnCours.partieTerminee = true;
-        }
-        _context.ScoreParties.Update(partieEnCours);
-        return partieEnCours.partieTerminee;
-    }
 
-    public double FouillerPiece(ScorePartie partieEnCours)
+
+    public async Task<double> FouillerPiece(ScorePartie partieEnCours)
     {
-        partieEnCours.donjonGenere = _donjonService.TrouverDonjon(partieEnCours.donjonId);
+        partieEnCours.donjonGenere = await _donjonService.TrouverDonjon(partieEnCours.donjonId);
         int pieceEnCours = partieEnCours.progression;
         double scoreBonusDeLaPiece = partieEnCours.donjonGenere.sallesList[pieceEnCours].scoreBonus;
         partieEnCours.score += scoreBonusDeLaPiece;
         return scoreBonusDeLaPiece;
     }
 
-    public Salles ChargerSalle(ScorePartie partieEnCours)
+    public async Task<Salles> ChargerSalle(ScorePartie partieEnCours)
     {
-        partieEnCours.donjonGenere = _donjonService.TrouverDonjon(partieEnCours.donjonId);
+        partieEnCours.donjonGenere = await _donjonService.TrouverDonjon(partieEnCours.donjonId);
         var salle = partieEnCours.donjonGenere.sallesList;
         Salles salleEnCours = salle[partieEnCours.progression];
         return salleEnCours;
     }
     
-    public int InfligerDegats(ScorePartie partieEnCours)
+    public async Task<int> InfligerDegats(ScorePartie partieEnCours)
     {
         var rand = new Random();
-        partieEnCours.donjonGenere = _donjonService.TrouverDonjon(partieEnCours.donjonId);
+        partieEnCours.donjonGenere = await _donjonService.TrouverDonjon(partieEnCours.donjonId);
         int pieceEnCours = partieEnCours.progression;
         Monstre monstreEnCours = partieEnCours.donjonGenere.sallesList[pieceEnCours].monstre;
         double probabiliteDeTouche = monstreEnCours.chanceToucher;

@@ -6,12 +6,10 @@ namespace BlazorAppApi.Service;
 public class MonstreService : IMonstreService
 {
     BlazorQuestDbContext _context;
-    ISallesService _salles;
 
-    public MonstreService(BlazorQuestDbContext context, ISallesService salles)
+    public MonstreService(BlazorQuestDbContext context)
     {
         _context = context;
-        _salles = salles;
     }
 
     public async Task<Monstre> CreationMonstre(Monstre monstre)
@@ -41,17 +39,5 @@ public class MonstreService : IMonstreService
     public List<Monstre> TrouverTousLesMonstres()
     {
         return _context.Monstres.ToList();
-    }
-
-    public Monstre ChargerMonstreDeLaSalle(Salles salleDuMonstre)
-    {
-        Monstre monstreDeLaSalle = TrouverMonstreParId(salleDuMonstre.monstreId);
-        //On ne charge que si la salle n'a pas encore le monstre chargé
-        if (salleDuMonstre.monstre == null)
-        {
-            salleDuMonstre.monstre =  TrouverMonstreParId(monstreDeLaSalle.monstreid);
-        }
-        _context.Update(salleDuMonstre);
-        return  monstreDeLaSalle;
     }
 }

@@ -21,9 +21,9 @@ namespace BlazorAppApi.Controller
         }
 
         [HttpGet("trouverUnDonjon/{IdDonjon}")]
-        public Donjons TrouverUnDonjon(int IdDonjon)
+        public async Task<Donjons> TrouverUnDonjon(int IdDonjon)
         {
-            return _donjonsService.TrouverDonjon(IdDonjon);
+            return await _donjonsService.TrouverDonjon(IdDonjon);
         }
         
         [HttpGet("trouvertouslesdonjons")]

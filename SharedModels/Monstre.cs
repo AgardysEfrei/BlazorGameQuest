@@ -12,5 +12,5 @@ public class Monstre
     public required double chanceToucher { get; set; }
     public required double pointGagner { get; set; }
     [JsonIgnore]
-    public Salles salle { get; set; } = null!;
+    public Salles? salle { get; set; } = null!;
 }
