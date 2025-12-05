@@ -14,10 +14,8 @@ builder.Services.AddHttpClient("Api", client =>
     // If you are using Docker Compose, this should be the name of your API service.
     // For local testing outside of Docker, use the API's specific URL (e.g., "https://localhost:7001/").
     // Assuming your API service name in Docker is 'api-service-name':
-    client.BaseAddress = new Uri("http://blazorappapi/"); 
+    client.BaseAddress = new Uri("http://blazorappapi:8080/"); 
     
-    // If running locally without Docker, and your API runs on http://localhost:5001:
-    // client.BaseAddress = new Uri("http://localhost:5001/");
 });
 var app = builder.Build();
 

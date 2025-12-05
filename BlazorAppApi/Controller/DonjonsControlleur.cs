@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using BlazorAppApi.Service;
 using Microsoft.AspNetCore.Mvc;
 using SharedModelDbContext;
 using SharedModels;
@@ -9,25 +10,26 @@ namespace BlazorAppApi.Controller
     [Route("api/[controller]")]
     [ApiController]
 
-    public class DonjonsControlleur : ControllerBase
+    public class DonjonsControlleur(IDonjonsService donjonsService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        public DonjonsControlleur(BlazorQuestDbContext context)
+        private readonly IDonjonsService _donjonsService = donjonsService;
+        
+        [HttpPost("genererundonjon")]
+        public Task<Donjons> CreationeDonjons()
         {
-            _context = context;
+            return _donjonsService.CreationDonjons();
         }
-        [HttpPost("genererundonjonvide")]
-        public async Task<ActionResult<Donjons>> CreationeDonjons()
+
+        [HttpGet("trouverUnDonjon/{IdDonjon}")]
+        public async Task<Donjons> TrouverUnDonjon(int IdDonjon)
         {
-            var nouveauDonjon = new Donjons();
-            _context.DonjonsEnumerable.Add(nouveauDonjon);
-            await _context.SaveChangesAsync();
-            return nouveauDonjon;
+            return await _donjonsService.TrouverDonjon(IdDonjon);
         }
+        
         [HttpGet("trouvertouslesdonjons")]
         public List<Donjons> TrouverTousLesDonjons()
         {
-            return _context.DonjonsEnumerable.ToList();
+            return _donjonsService.TrouverTousLesDonjons();
         }
     }
 }

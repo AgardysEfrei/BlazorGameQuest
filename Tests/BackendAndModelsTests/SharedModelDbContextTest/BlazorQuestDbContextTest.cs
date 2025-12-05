@@ -38,7 +38,7 @@ namespace MonApplication.Tests
                 // ASSERT
                 // Vérifie que la création du contexte n'a pas levé d'exception et que les DbSet sont accessibles.
                 Assert.IsNotNull(context.Utilisateurs);
-                Assert.IsNotNull(context.DonjonsEnumerable);
+                Assert.IsNotNull(context.Donjons);
                 Assert.IsNotNull(context.Monstres);
             }
         }

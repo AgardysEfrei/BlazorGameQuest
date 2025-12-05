@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using BlazorAppApi.Service;
 using Microsoft.AspNetCore.Mvc;
 using SharedModelDbContext;
 using SharedModels;
@@ -9,25 +10,25 @@ namespace BlazorAppApi.Controller
     [Route("api/[controller]")]
     [ApiController]
 
-    public class SallesControlleur : ControllerBase
+    public class SallesControlleur(ISallesService sallesService) : ControllerBase
     {
-        private readonly BlazorQuestDbContext _context;
-        public SallesControlleur(BlazorQuestDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ISallesService _sallesService = sallesService;
         [HttpPost("genererunesallevide")]
-        public async Task<ActionResult<Salles>> CreationeSalles()
+        public Task<Salles> CreationeSalles()
         {
-            var nouvelleSalle = new Salles();
-            _context.SallesEnumerable.Add(nouvelleSalle);
-            await _context.SaveChangesAsync();
-            return nouvelleSalle;
+            return _sallesService.CreationSalles();
         }
+
+        [HttpGet("trouverUneSalle/{idSalle}")]
+        public Salles TrouverUneSalle(int idSalle)
+        {
+            return _sallesService.TrouverSalle(idSalle);
+        }
+        
         [HttpGet("trouvertouteslesSalles")]
         public List<Salles> TrouverTousLesSalles()
         {
-            return _context.SallesEnumerable.ToList();
+            return _sallesService.TrouverToutesLesSalles();
         }
     }
 }

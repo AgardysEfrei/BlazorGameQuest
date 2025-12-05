@@ -1,0 +1,47 @@
+﻿@page "/PartieEnCours/{idPartieEnCours:int}"
+
+<PageTitle>Partie @idPartieEnCours</PageTitle>
+@if (IsLoading)
+{
+    <div class="alert alert-info">
+        Chargement de la partie en cours...
+    </div>
+}
+else
+{
+    <div class="image_conteneur">
+        <img class="background-image" src="dungeon_room.jpg"/>
+        @if (!@partieActuelle!.estVaincu)
+        {
+            <div class="image_contenu">
+                <img class="image_mechant" src="@salleEnCours!.monstre!.lienImage"/>
+            </div>
+        }
+
+        <div class="menu_haut_conteneur">
+            <button @onclick="() => Attaquer(salleEnCours!.monstre!.pointDeVie,salleEnCours.monstre.pointGagner)" class="action_bouton" disabled="@(partieActuelle.partieTerminee||partieActuelle.estVaincu)">Attaquer</button>
+            <button @onclick="() => Fouiller()" class="action_bouton" disabled="@(partieActuelle.partieTerminee||partieActuelle.aFouille)">Fouiller</button>
+            <button @onclick="() => Analyser(salleEnCours!.monstre!.description)" class="action_bouton" disabled="@partieActuelle.partieTerminee">Analyser</button>
+            <button @onclick="() => Fuir()" class="action_bouton" disabled="@partieActuelle.partieTerminee">Changer de piece</button>
+        </div>
+        
+        <div class="stats_droite_conteneur">
+            <p>PV restants:  <span>@partieActuelle.pointsDeVie</span></p>
+            <p>Progression : <span>Salle @(partieActuelle.progression+1)/5</span></p>
+            <p>Score : <span>@partieActuelle.score points</span></p>
+        </div>
+        
+        <div class="zone_texte_bas_conteneur">
+            <textarea class="zone_texte_input" readonly>@message</textarea>
+        </div>
+
+    </div>
+}
+@code {
+    [Parameter]
+    public int idPartieEnCours { get; set; }
+
+    public string message { get; set; } = "Un monstre vous attaque ! Que faites vous ?";
+    
+
+}

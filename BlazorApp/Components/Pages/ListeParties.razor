@@ -1,0 +1,57 @@
+﻿@page "/ListeParties/{idJoueur:int}"
+
+<PageTitle>Liste des parties</PageTitle>
+<h3>ListeParties</h3>
+
+@if (IsLoading)
+{
+    <div class="alert alert-info">
+        Chargement des parties en cours...
+    </div>
+}
+else
+{
+    @if(listeDesPartiesEnCours is not null) 
+    {
+        <h4>Parties disponibles :</h4>
+        <table>
+            <thead>
+            <tr>
+                <th>Id Partie</th>
+                <th>Score</th>
+                <th>Progression</th>
+                <th>Partie finie ?</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var partie in listeDesPartiesEnCours)
+            {
+                <tr>
+                    <td>@partie.ScorePartieId</td>
+                    <td>@partie.score</td>
+                    <td>@partie.progression</td>
+                    @if (!partie.partieTerminee) 
+                        {
+                            <button @onclick="() => SelectionnerPartie(partie.ScorePartieId)">Charger la partie</button>
+                        }
+                    <td>@partie.partieTerminee</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <hr/>
+    }
+    else
+    {
+        <div>
+            Aucune partie en cours trouvée.
+        </div>
+    }
+    <button @onclick="()=>GenererNouvellePartie()">
+        Créer une Nouvelle Partie
+    </button>
+}
+@code {
+    [Parameter]
+    public int idJoueur { get; set; }
+}
