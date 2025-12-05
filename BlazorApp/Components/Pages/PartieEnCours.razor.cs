@@ -77,6 +77,8 @@ public partial class PartieEnCours : ComponentBase
                 message = "Vous n'avez plus de points de vie ! GAME OVER";
                 partieActuelle.score = 0;
                 partieActuelle.partieTerminee = true;
+                await Task.Delay(2000);
+                NavigationManager?.NavigateTo($"ListeParties/{partieActuelle.joueurId}");
                 StateHasChanged();
             } 
         }
@@ -111,10 +113,12 @@ public partial class PartieEnCours : ComponentBase
 
     private async Task Fuir()
     {
-        if (partieActuelle.progression > 4)
+        if (partieActuelle.progression >= 4)
         {
             partieActuelle.partieTerminee = true;
             message = "Vous avez fini la partie !";
+            await Task.Delay(2000);
+            NavigationManager?.NavigateTo($"ListeParties/{partieActuelle.joueurId}");
         }
         else
         {
@@ -122,6 +126,7 @@ public partial class PartieEnCours : ComponentBase
             await Task.Delay(2000);
             partieActuelle.progression += 1;
             partieActuelle.pointsDeVie += 1;
+            partieActuelle.degatsInfliges = 0;
             partieActuelle.aFouille = false;
             partieActuelle.estVaincu=false;
             var progressionActuel = partieActuelle!.progression;

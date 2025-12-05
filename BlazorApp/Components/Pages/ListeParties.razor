@@ -20,6 +20,7 @@ else
                 <th>Id Partie</th>
                 <th>Score</th>
                 <th>Progression</th>
+                <th>Partie finie ?</th>
             </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@ else
                         {
                             <button @onclick="() => SelectionnerPartie(partie.ScorePartieId)">Charger la partie</button>
                         }
+                    <td>@partie.partieTerminee</td>
                 </tr>
             }
             </tbody>
