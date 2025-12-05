@@ -30,11 +30,11 @@ else
                     <td>@partie.ScorePartieId</td>
                     <td>@partie.score</td>
                     <td>@partie.progression</td>
-                    @if (!partie.partieTerminee) 
-                        {
-                            <button @onclick="() => SelectionnerPartie(partie.ScorePartieId)">Charger la partie</button>
-                        }
                     <td>@partie.partieTerminee</td>
+                    @if (!partie.partieTerminee) 
+                    {
+                        <button @onclick="() => SelectionnerPartie(partie.ScorePartieId)">Charger la partie</button>
+                    }
                 </tr>
             }
             </tbody>
