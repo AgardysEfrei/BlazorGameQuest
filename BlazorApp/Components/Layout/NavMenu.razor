@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorGameQuest</a>
     </div>
@@ -8,6 +10,16 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <AuthorizeView>
+                <Authorized>
+                    <div class="nav-link">
+                        <span class="bi bi-person-fill" aria-hidden="true"></span> @context.User.Identity?.Name
+                        @* Logged in as @context.User.Claims.Aggregate("", (s, claim) => s += ";\n" + claim ) *@
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+        </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-sword" aria-hidden="true"></span> Aventure
@@ -28,6 +40,18 @@
                 <span class="bi bi-visualisation" aria-hidden="true"></span> ListeDesParties
                 <!-- A modifier pour la version 4-->
             </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <AuthorizeView>
+                <Authorized>
+                    <form action="Logout" method="post">
+                        <AntiforgeryToken />
+                        <button type="submit" class="nav-link">
+                            <span class="bi bi-box-arrow-left" aria-hidden="true"></span> Logout
+                        </button>
+                    </form>
+                </Authorized>
+            </AuthorizeView>
         </div>
     </nav>
 </div>
