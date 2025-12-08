@@ -2,7 +2,6 @@
 using BlazorAppApi.Controller;
 using Microsoft.AspNetCore.Mvc;
 using SharedModelDbContext;
-using SharedModels;
 namespace BlazorAppApi.Service;
 
 public class AdministrateurService : IAdministrateurService
@@ -35,7 +34,7 @@ public class AdministrateurService : IAdministrateurService
 
     public Administrateur TrouverAdministrateurParId(int id)
     {
-        Administrateur AdministrateurAppele = _context.Administrateurs.Find(id);
+        Administrateur? AdministrateurAppele = _context.Administrateurs.Find(id);
         if (AdministrateurAppele == null)
             throw new BadHttpRequestException("Aucun Administrateur trouve");
         return AdministrateurAppele;

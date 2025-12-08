@@ -38,5 +38,24 @@
       - "5001:8080"
     volumes:
       - dpkeys:/app/keys/
+  
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.7
+    volumes:
+      - "./keycloak:/opt/keycloak/data/import"
+    ports:
+      - "8082:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+      KC_DB_URL: jdbc:postgresql://db:5432/keycloak
+      KC_DB: postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["start-dev", "--import-realm"]
 volumes:
   dpkeys: {}

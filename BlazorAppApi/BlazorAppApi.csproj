@@ -24,6 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Update="appsettings.json" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.*.json" CopyToPublishDirectory="Never" />
+    </ItemGroup>
+    
+    <ItemGroup>
       <ProjectReference Include="..\SharedModelDbContext\SharedModelDbContext.csproj" />
       <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
     </ItemGroup>
