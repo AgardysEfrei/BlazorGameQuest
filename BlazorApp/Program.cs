@@ -1,5 +1,7 @@
 using BlazorApp.Components;
 using Microsoft.AspNetCore.DataProtection;
+using BlazorAppApi.Service;
+using SharedModels;
 
 var builder = WebApplication.CreateBuilder(args);
 

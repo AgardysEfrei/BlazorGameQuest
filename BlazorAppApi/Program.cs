@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SharedModelDbContext;
 using BlazorAppApi.Service;
@@ -34,7 +35,6 @@ builder.Services.AddScoped<IMonstreService, MonstreService>();
 builder.Services.AddScoped<ISallesService, SallesService>();
 builder.Services.AddScoped<IScorePartieService, ScorePartieService>();
 builder.Services.AddScoped<IUtilisateurService, UtilisateurService>();
-
 
 var app = builder.Build();
 

@@ -1,0 +1,65 @@
+﻿@page "/Admin/{idAdmin:int}"
+
+<PageTitle>Interface administrateur</PageTitle>
+<h3>Interface administrateur</h3>
+<div class="admin-dashboard">
+@if (IsLoading)
+{
+    <div class="alert alert-info">
+        Chargement des joueurs en cours...
+    </div>
+}
+else
+{
+    @if(listeDesJoueurs is not null) 
+    {
+        <h4>Liste des joueurs :</h4>
+        <table>
+            <thead>
+            <tr>
+                <th>Id Utilisateur</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Statut</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var joueur in listeDesJoueurs)
+            {
+                <tr>
+                    <td>@joueur.utilisateurId</td>
+                    <td>@joueur.utilisateur.nom</td>
+                    <td>@joueur.utilisateur.prenom</td>
+                    <td>@joueur.utilisateur.estActive</td>
+                    @if (joueur.utilisateur.estActive) 
+                    {
+                        <button @onclick="() => DesactiverJoueurs(joueur.utilisateurId)">Désactiver le compte</button>
+                    }
+                    @if (!joueur.utilisateur.estActive) 
+                    {
+                        <button @onclick="() => ReactiverJoueurs(joueur.utilisateurId)">Réactiver le compte</button>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+        <hr/>
+    }
+    else
+    {
+        <div>
+            Aucun joueur trouvé.
+        </div>
+    }
+    @if (IsChanging)
+        {
+            <p>Changement en cours...</p>
+        }
+}</div>
+@code {
+    [CascadingParameter(Name = "utilisateurConnecte")]
+    public int idUtilisateur { get; set; }
+    [Parameter] 
+    public int idAdmin { get; set; }
+
+}

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SharedModelDbContext;
 using SharedModels;
-using SharedModelDbContext;
 
 namespace BlazorAppApi.Service;
 
@@ -34,19 +33,32 @@ public class JoueurService : IJoueurService
         await _context.SaveChangesAsync();
         return nouvelJoueur;
     }
-    
-    [HttpGet("trouverJoueur/{id}")]
     public Joueur TrouverJoueurParId(int id)
     {
-        Joueur JoueurAppele = _context.Joueurs.Find(id);
-        JoueurAppele.utilisateur = _utilisateurService.TrouverUtilisateurParId(JoueurAppele.utilisateurId);
+        Joueur? JoueurAppele = _context.Joueurs.Find(id);
+        JoueurAppele!.utilisateur = _utilisateurService.TrouverUtilisateurParId(JoueurAppele.utilisateurId);
         if (JoueurAppele == null)
             throw new BadHttpRequestException("Aucun Joueur trouve");
+        JoueurAppele.score = _context.ScoreParties.Where(p => p.joueurId == id).ToList();
         return JoueurAppele;
     }
     
     public List<Joueur> TrouverTousLesJoueurs()
     {
-        return _context.Joueurs.ToList();
+        List<Joueur> listeDesIdJoueurs = _context.Joueurs.ToList();
+        List<Joueur> listeDesJoueurs = new List<Joueur>();
+        foreach (var joueur in listeDesIdJoueurs)
+        {
+            listeDesJoueurs.Add(TrouverJoueurParId(joueur.joueurid));
+        }
+        return listeDesJoueurs;
+    }
+
+    public double CalculerScoreTotal(int id)
+    {
+        var joueurActuel = TrouverJoueurParId(id);
+        double scoreTotal = joueurActuel.score.Sum(partie => partie.score);
+        return scoreTotal;
+
     }
 }

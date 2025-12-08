@@ -31,7 +31,14 @@ namespace BlazorAppApi.Controller
         [HttpGet("trouvertouslesJoueurs")]
         public List<Joueur> TrouverTousLesJoueurs()
         {
-            return _joueurService.TrouverTousLesJoueurs();
+            List<Joueur> resultat = _joueurService.TrouverTousLesJoueurs(); 
+            return resultat;
+        }
+
+        [HttpGet("CalculerScoreJoueur/{id}")]
+        public Double CalculerScoreJoueur(int id)
+        {
+            return _joueurService.CalculerScoreTotal(id);
         }
     }
 }

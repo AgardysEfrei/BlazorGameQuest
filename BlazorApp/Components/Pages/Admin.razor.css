@@ -1,0 +1,96 @@
+﻿/* Styling for the main dashboard container */
+.admin-dashboard {
+    padding: 20px;
+    background-color: #f8f9fa; /* Light grey background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the main heading */
+h3 {
+    color: #007bff; /* Blue */
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* Styling for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+/* Styling for table header cells */
+thead th {
+    background-color: #007bff; /* Blue header */
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #dee2e6;
+}
+
+/* Styling for table data cells */
+tbody td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+/* Zebra striping for readability */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Styling for the buttons */
+button {
+    padding: 8px 12px;
+    margin: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+/* Specific style for the "Désactiver" button */
+button:nth-child(1) { /* The first button in the <td> */
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+button:nth-child(1):hover {
+    background-color: #c82333;
+}
+
+/* Specific style for the "Réactiver" button */
+button:nth-child(2) { /* The second button in the <td> */
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+button:nth-child(2):hover {
+    background-color: #218838;
+}
+
+/* Style for loading and info messages */
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Style for the "Changement en cours..." message */
+.admin-dashboard p {
+    font-style: italic;
+    color: #6c757d;
+    margin-top: 15px;
+}

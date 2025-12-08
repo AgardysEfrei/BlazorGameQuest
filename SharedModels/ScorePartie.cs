@@ -8,6 +8,7 @@ public class ScorePartie
     public int ScorePartieId { get; set; }
     //Joueur qui a commencé la partie
     public int joueurId { get; set; }
+    [JsonIgnore]
     public Joueur? joueur { get; set; } = null!;
     public double score { get; set; } = 0;
     public int progression { get; set; } = 0;

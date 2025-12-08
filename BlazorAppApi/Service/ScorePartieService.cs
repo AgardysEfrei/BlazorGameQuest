@@ -96,8 +96,8 @@ public class ScorePartieService : IScorePartieService
         var rand = new Random();
         partieEnCours.donjonGenere = await _donjonService.TrouverDonjon(partieEnCours.donjonId);
         int pieceEnCours = partieEnCours.progression;
-        Monstre monstreEnCours = partieEnCours.donjonGenere.sallesList[pieceEnCours].monstre;
-        double probabiliteDeTouche = monstreEnCours.chanceToucher;
+        Monstre? monstreEnCours = partieEnCours.donjonGenere.sallesList[pieceEnCours].monstre;
+        double probabiliteDeTouche = monstreEnCours!.chanceToucher;
         int touche = rand.Next(101);
         //Si la touche est inférieur ou égale à la probabilité de touché alors on touche !
         //Cela permet de rester consistent avec les statistiques.

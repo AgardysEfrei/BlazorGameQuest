@@ -1,0 +1,43 @@
+﻿@page "/Leaderboard"
+@attribute [StreamRendering]
+<PageTitle>Leaderboard</PageTitle>
+@if (IsLoading)
+{
+    <div class="alert alert-info">
+        Chargement des scores en cours...
+    </div>
+}
+
+else{
+<h1>LeaderBoard</h1>
+
+<p>Voici le classement des joueurs</p>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>Nom du joueur</th>
+            <th>Nombre de parties générées</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var joueurs in ListeDesJoueurs){
+            <tr>
+                <td>@(++compteur)</td>
+                <td>@joueurs.utilisateur.nom</td>
+                <td>@joueurs.score.Count</td>
+                <td>@(RetounerScoreTotal(joueurs))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@code{
+    int compteur { get; set; } = 0;
+    public Double RetounerScoreTotal(SharedModels.Joueur joueur){
+        return joueur.score.Sum(x=>x.score);
+}
+}

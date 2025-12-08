@@ -1,6 +1,7 @@
 ﻿@page "/ListeParties/{idJoueur:int}"
 
 <PageTitle>Liste des parties</PageTitle>
+<div class="game-dashboard">
 <h3>ListeParties</h3>
 
 @if (IsLoading)
@@ -30,11 +31,11 @@ else
                     <td>@partie.ScorePartieId</td>
                     <td>@partie.score</td>
                     <td>@partie.progression</td>
+                    <td>@partie.partieTerminee</td>
                     @if (!partie.partieTerminee) 
                         {
                             <button @onclick="() => SelectionnerPartie(partie.ScorePartieId)">Charger la partie</button>
                         }
-                    <td>@partie.partieTerminee</td>
                 </tr>
             }
             </tbody>
@@ -50,8 +51,13 @@ else
     <button @onclick="()=>GenererNouvellePartie()">
         Créer une Nouvelle Partie
     </button>
+
 }
+</div>
 @code {
-    [Parameter]
+    [CascadingParameter(Name = "utilisateurConnecte")]
+    public int idUtilisateur { get; set; }
+    [Parameter] 
     public int idJoueur { get; set; }
+
 }

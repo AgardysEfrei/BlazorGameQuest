@@ -95,6 +95,14 @@ public class BlazorQuestDbContext : DbContext
         modelBuilder.Entity<SharedModels.Administrateur>()
             .Property(f=>f.administrateurid)
             .ValueGeneratedOnAdd();
+        modelBuilder.Entity<Administrateur>()
+            .HasData(
+            new Administrateur()
+            {
+                administrateurid = 50,
+                utilisateurId = 40
+            }
+            );
         modelBuilder.Entity<SharedModels.Donjons>()
             .Property(f=>f.donjonsid)
             .ValueGeneratedOnAdd();
@@ -116,7 +124,15 @@ public class BlazorQuestDbContext : DbContext
                     prenom = "Test",
                     adresseMail = "Test@Test.com",
                     motDePasse = "Test"
-                
+
+                },
+                new Utilisateur()
+                {
+                    utilisateurId = 40,
+                    nom = "Admin",
+                    prenom = "DeTest",
+                    adresseMail = "testadmin@admin.com",
+                    motDePasse = "Admin"
                 }
                 )
             ;
