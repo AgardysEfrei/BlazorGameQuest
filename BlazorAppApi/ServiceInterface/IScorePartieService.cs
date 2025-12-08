@@ -11,5 +11,6 @@ public interface IScorePartieService
     public Task<double> FouillerPiece(ScorePartie partieEnCours);
     public Task<int> InfligerDegats(ScorePartie partieEnCours);
     public Task<bool> SauvegarderPartie(ScorePartie partieEnCours);
+    
 
 }

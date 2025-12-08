@@ -1,1 +1,126 @@
-﻿
+﻿/* Style général du tableau de bord de jeu */
+.game-dashboard {
+    padding: 20px;
+    background-color: #f0f2f5; /* Fond léger */
+    border-radius: 10px;
+}
+
+/* Titre principal */
+.game-dashboard h3 {
+    color: #4a5568; /* Gris foncé pour le contraste */
+    border-bottom: 2px solid #4299e1; /* Petite barre bleue claire */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* Sous-titre "Parties disponibles" */
+.game-dashboard h4 {
+    color: #2b6cb0; /* Bleu plus soutenu */
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+/* Style de la table entière */
+.game-dashboard table {
+    width: 100%;
+    border-collapse: separate; /* Permet d'arrondir les coins */
+    border-spacing: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Entête du tableau */
+.game-dashboard thead {
+    background-color: #4299e1; /* Bleu clair */
+    color: white;
+}
+
+/* Cellules de l'entête */
+.game-dashboard th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+/* Lignes du corps */
+.game-dashboard tbody tr {
+    border-bottom: 1px solid #ebf4ff; /* Ligne de séparation très claire */
+}
+
+/* Alternance des couleurs pour améliorer la lecture */
+.game-dashboard tbody tr:nth-child(even) {
+    background-color: #f7f9fc;
+}
+
+/* Cellules du corps */
+.game-dashboard td {
+    padding: 12px 15px;
+    color: #4a5568;
+    vertical-align: middle;
+}
+
+/* Message de chargement/absence */
+.game-dashboard .alert-info,
+.game-dashboard div:not([class]):last-child {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #ffe0b2; /* Orange très léger pour l'info */
+    border: 1px solid #ff9800;
+    color: #ff9800;
+    font-weight: 500;
+}
+
+/* --- Style des Boutons d'Action --- */
+
+/* Bouton "Charger la partie" (dans le tableau) */
+.game-dashboard table button {
+    background-color: #48bb78; /* Vert (couleur Succès) */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.game-dashboard table button:hover {
+    background-color: #38a169;
+}
+
+/* Bouton "Créer une Nouvelle Partie" (en bas) */
+.game-dashboard > button:last-child {
+    display: block; /* Prend toute la largeur si nécessaire */
+    width: 250px;
+    margin-top: 30px;
+    padding: 15px 25px;
+    background-color: #e53e3e; /* Rouge (couleur Danger/Action Primaire) */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.game-dashboard > button:last-child:hover {
+    background-color: #c53030;
+    transform: translateY(-2px); /* Léger effet de soulèvement */
+}
+
+/* Ligne de séparation */
+.game-dashboard hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 25px 0;
+}

@@ -25,33 +25,35 @@
                 <span class="bi bi-sword" aria-hidden="true"></span> Aventure
             </NavLink>
         </div>
+        
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Scoreboard">
-                <span class="bi bi-scoreboard" aria-hidden="true"></span> Scoreboard
+            <NavLink class="nav-link" href="Leaderboard">
+                <span class="bi bi-scoreboard" aria-hidden="true"></span> Leaderboard
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Visualisation">
-                <span class="bi bi-visualisation" aria-hidden="true"></span> Visualisation
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/ListeParties/20">
+        @if (modeDeConnexion.Equals("joueur"))
+        {
+            <div class="nav-item px-3">
+            <NavLink class="nav-link" href="@($"/ListeParties/{idUtilisateur}")">
                 <span class="bi bi-visualisation" aria-hidden="true"></span> ListeDesParties
-                <!-- A modifier pour la version 4-->
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <AuthorizeView>
-                <Authorized>
-                    <form action="Logout" method="post">
-                        <AntiforgeryToken />
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-box-arrow-left" aria-hidden="true"></span> Logout
-                        </button>
-                    </form>
-                </Authorized>
-            </AuthorizeView>
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@($"/Admin/{idUtilisateur}")">
+                    <span class="bi bi-visualisation" aria-hidden="true"></span> Interface Administrateur
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
+@code{
+
+    [CascadingParameter(Name = "utilisateurConnecte")]
+    public int idUtilisateur { get; set; }
+    [CascadingParameter(Name = "modeDeConnexion")]
+    public string modeDeConnexion { get; set; }
+
+}

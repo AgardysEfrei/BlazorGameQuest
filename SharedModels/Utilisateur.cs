@@ -13,4 +13,5 @@ public class Utilisateur
     public required String prenom { get; set; }
     public required String adresseMail { get; set; }
     public required String motDePasse { get; set; }
+    public Boolean estActive { get; set; } = true;
 }

@@ -15,7 +15,10 @@
 <p>Enfin, les piège ou bonus ne sont pas aléatoire ce qui veut dire que l'option fouiller vous donnera toujours le même résultat avec le même ennemie</p>
 <p>Apprenez les patternes ! Voyez quels ennemis vous pouvez facilement vaincre !</p>
 <p>Si vous perdez tous vos pv c'est GAME OVER, alors ne soyez pas trop téméraire et bon jeu !</p>
-<a href="/ListeParties/20">
-<!-- A modifier pour la version 4-->
-    Liste des parties
-</a>
+<a href="@($"/ListeParties/{idUtilisateur}")">Accéder à la liste des parties</a>
+@code{
+
+    [CascadingParameter(Name = "utilisateurConnecte")]
+    public int idUtilisateur { get; set; }
+
+}

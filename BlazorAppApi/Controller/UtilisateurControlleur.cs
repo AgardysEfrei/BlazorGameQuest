@@ -36,5 +36,16 @@ namespace BlazorAppApi.Controller
             return _utilisateurService.TrouverTousLesUtilisateurs();
         }
 
+        [HttpPatch("desactiverUtilisateur/{id}")]
+        public void DesactiverUtilisateur(int id)
+        { 
+            _utilisateurService.DesactiverUtilisateur(id);
+        }
+
+        [HttpPatch("reactiverUtilisateur/{id}")]
+        public void ReactiverUtilisateur(int id)
+        {
+            _utilisateurService.ReactiverUtilisateur(id);
+        }
     }
 }

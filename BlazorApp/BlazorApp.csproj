@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BlazorAppApi\BlazorAppApi.csproj" />
       <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
     </ItemGroup>
 

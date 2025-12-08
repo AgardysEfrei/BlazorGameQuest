@@ -1,23 +1,173 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorAppApi.Controller
+@using SharedModels
+@implements IDisposable
+@inherits LayoutComponentBase
+<CascadingValue value="idUtilisateur" Name="utilisateurConnecte">
+<CascadingValue value = "modeDeConnexion" Name= "modeDeConnexion">
+    <div class="page">
+        @if (!isActive)
+        {
+            <div class="blocked-message">
+                <h1>🛑 Accès Restreint</h1>
+                <p>Votre compte a été bloqué par un administrateur. Vous n'avez accès à aucune autre fonctionnalité.</p>
+                <p>Veuillez contacter le support pour plus d'informations.</p>
+            </div>
+        }
+        else
+        {
+            <div class="sidebar">
+                <NavMenu/>
+            </div>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
+            <main>
+
+                <article class="content px-4">
+
+                    @Body
+
+                </article>
+
+            </main>
+            }
+        @if (!EstEnJeu && !EstEnAdmin)
+        {
+            <div class="top-row px-4">
+                @if (modeDeConnexion == "joueur")
+                {
+                    <button class="btn btn-secondary" @onclick="passerEnModeAdmin">Passer en mode administrateur </button>
+                }
+                else
+                {
+                    <button class="btn btn-secondary" @onclick="passerEnModeJoueur">Passer en mode joueur </button>
+                }
+            </div>
+        }
     </div>
+    </CascadingValue >
+    </CascadingValue >
+        <div id = "blazor-error-ui" data - nosnippet >
+            An unhandled error has occurred.
+            <a href = "." class ="reload" > Reload </a >
+            <span class ="dismiss" >🗙</span >
+        </div >
 
-    <main>
-        <div class="top-row px-4">
-            <a href="mettre le lien de connexion ici" target="_blank">Se connecter</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        @code{
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
+    [Inject]
+    public IJSRuntime? JSRuntime { get; set; }
+    [Inject]
+    private IHttpClientFactory? HttpClientFactory { get; set; }
+    private HttpClient? HttpClient => HttpClientFactory?.CreateClient("Api");
+    private bool _isRendered = false;
+    private bool EstEnJeu => NavigationManager?.Uri.Contains("PartieEnCours", StringComparison.OrdinalIgnoreCase) ?? false;
+    private bool EstEnAdmin => NavigationManager?.Uri.Contains("Admin", StringComparison.OrdinalIgnoreCase) ?? false;
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+    public int idUtilisateur { get; set; } = 0;
+    public string modeDeConnexion = "joueur";
+    public bool isActive = true;
+    
+    private const string IdKey = "UtilisateurId";
+    private const string ModeKey = "ModeConnexion";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && JSRuntime != null)
+                {
+                    var storedId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", IdKey);
+                    if (int.TryParse(storedId, out int parsedId))
+                    {
+                        idUtilisateur = parsedId;
+                    }
+                    else
+                    {
+                        idUtilisateur = 20; 
+                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", IdKey, idUtilisateur.ToString());
+                    }
+
+                    // --- Chargement du Mode ---
+                    var storedMode = await JSRuntime.InvokeAsync<string>("localStorage.getItem", ModeKey);
+                    if (!string.IsNullOrEmpty(storedMode))
+                    {
+                        modeDeConnexion = storedMode;
+                    }
+                    else
+                    {
+                        modeDeConnexion = "joueur";
+                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", ModeKey, modeDeConnexion);
+                    }
+                    
+                    // Abonnez-vous à l'événement ici après l'initialisation de l'état
+                    if (NavigationManager != null)
+                    {
+                        NavigationManager.LocationChanged += HandleLocationChanged;
+                    }
+                    
+                    // Forcez un re-rendu pour mettre à jour l'UI avec les valeurs du localStorage
+                    await UtilisateurBloque(idUtilisateur);
+                    StateHasChanged(); 
+                }
+            }
+
+    public async Task passerEnModeAdmin()
+    {
+        idUtilisateur = 40;
+        modeDeConnexion = "admin";
+        await UtilisateurBloque(idUtilisateur);
+        // Enregistrer le nouvel état dans localStorage
+        if (JSRuntime != null)
+        {
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", IdKey, idUtilisateur.ToString());
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", ModeKey, modeDeConnexion);
+        }
+        
+        StateHasChanged();
+    }
+    
+    public async Task passerEnModeJoueur()
+    {
+        idUtilisateur = 20;
+        modeDeConnexion = "joueur";
+        await UtilisateurBloque(idUtilisateur);
+
+        // Enregistrer le nouvel état dans localStorage
+        if (JSRuntime != null)
+        {
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", IdKey, idUtilisateur.ToString());
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", ModeKey, modeDeConnexion);
+        }
+        
+        StateHasChanged();
+    }
+    protected override void OnInitialized()
+    {
+        // 💡 S'abonne à l'événement de changement d'URL
+        if (NavigationManager != null)
+        {
+            NavigationManager.LocationChanged += HandleLocationChanged;
+        }
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        // Force le re-rendu du layout chaque fois que l'URL change
+        // Ceci mettra à jour la valeur de IsInGamePage et masquera/affichera le bouton.
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        // 💡 N'oubliez jamais de vous désabonner pour éviter les fuites de mémoire (memory leaks)
+        if (NavigationManager != null)
+        {
+            NavigationManager.LocationChanged -= HandleLocationChanged;
+        }
+    }
+
+    public async Task UtilisateurBloque(int id)
+    {
+        var utilisateurCourant = await HttpClient.GetFromJsonAsync<Utilisateur>($"api/UtilisateurControlleur/trouverutilisateur/{id}");
+        isActive = utilisateurCourant.estActive;
+    }
+
+}

@@ -1,10 +1,7 @@
 using BlazorApp.Components;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
+using BlazorAppApi.Service;
+using SharedModels;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -174,7 +174,7 @@ namespace SharedModelDbContext.Migrations
                             monstreid = 5,
                             chanceToucher = 90.0,
                             description = "Juste un type avec un flingue, le frapper sera facile et pour vous et pour lui",
-                            lienImage = "homme_avec_une_arme.jpg",
+                            lienImage = "homme_avec_une_arme.jpeg",
                             nom = "Homme avec une arme",
                             pointDeVie = 40,
                             pointGagner = 290.0
@@ -366,6 +366,9 @@ namespace SharedModelDbContext.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("estActive")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("motDePasse")
                         .IsRequired()
                         .HasColumnType("text");
@@ -387,6 +390,7 @@ namespace SharedModelDbContext.Migrations
                         {
                             utilisateurId = 20,
                             adresseMail = "Test@Test.com",
+                            estActive = true,
                             motDePasse = "Test",
                             nom = "Test",
                             prenom = "Test"
